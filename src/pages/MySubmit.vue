@@ -69,7 +69,8 @@
 
                                         <div  class="col-md-12">
                                           <p class="">
-                                            {{$t("common.commonTips.msgTip15")}}
+                                            {{showMsgTips}}
+                                            <!-- {{$t("common.commonTips.msgTip15")}} -->
                                           </p>
                                         </div>
 
@@ -106,11 +107,17 @@ export default {
       mySubmitList: [],
       HRGBalance:0, //hrg余额
       mySubmitTableName: "#mySubmitTable",
-      btnDisabled:false
+      btnDisabled:false,
+      blockMax:0 //提交最大值
+
     }
   },
 
   computed: {
+    showMsgTips(){
+      let msg = this.$t("common.commonTips.msgTip15");
+      return msg.replaceAll('${block}',this.blockMax)
+    },
     getLanguage() {
       return this.$i18n.locale;
     },
@@ -142,11 +149,12 @@ export default {
     }, 
   },
 
-  mounted() { 
+  async mounted() { 
       var that = this;
       if(!that.IsConnected && web3.currentProvider.selectedAddress) {     
           that.accountAddress = web3.currentProvider.selectedAddress
       } 
+      that.blockMax = await configAbiContract.methods.getMaxVerifyBlocks().call() || 0;
       that.getSubmitList();
   },
 
@@ -446,7 +454,7 @@ export default {
         utils.toastMsgError(that.$t("common.commonTips.msgTip5"),that.$t("common.commonTips.msgTip1"),"toast-top-center")
         return ;
       } 
-      const blockMax = await configAbiContract.methods.getMaxVerifyBlocks().call() || 0;
+     
       tokenAbiContract.methods.balanceOf(that.accountAddress).call(null,function(err,result){ 
          if(err !==null){
             that.HRGBalance =0;
@@ -467,7 +475,7 @@ export default {
                 const obj = {
                   rowNum :index +1,
                   Block:item.block,
-                  EndBlock:parseInt(item.block) +parseInt(blockMax),
+                  EndBlock:parseInt(item.block) +parseInt(that.blockMax),
                   Hash:item.commit,
                   State:item.substatus 
                 }

@@ -5,7 +5,10 @@
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="widget widget-chart-three">
                         <div class="widget-heading"> 
-                            <h5 class="" style="line-height:37px">{{$t("purchase.pageName")}}</h5>  
+                            <h5 class="" style="line-height:37px">
+                              {{$t("purchase.pageName")}}
+                              <span style="color: #888ea8;font-size: 0.875rem;">&nbsp;&nbsp;{{showMsgTips}}</span>  
+                            </h5>
                         </div>
                         
                     </div>
@@ -66,7 +69,7 @@
 <script>
 import Footer from '../components/Footer.vue';  
 import utils from '../utils/custom';
-import {blockRange,oracleAbiContract} from '../utils/getContract'
+import {configAbiContract,oracleAbiContract} from '../utils/getContract'
 export default {
   name: "PurchasePage",
   components: { Footer },
@@ -77,9 +80,15 @@ export default {
       table: null,
       purchaseList: [],
       purchaseTableName: "#purchaseTable",
+      heighBlock:0,
+      unSubBlocks:0,//取消块购买高度
     }
   },
   computed: {
+    showMsgTips(){
+      let msg = this.$t("common.commonTips.msgTip18");
+      return msg.replaceAll('${block}',this.unSubBlocks)
+    },
     getLanguage() {
       return this.$i18n.locale;
     },
@@ -103,7 +112,7 @@ export default {
       };
     },
   },
-  mounted() {
+  async mounted() {
       var that = this; 
       if(!that.IsConnected && web3.currentProvider.selectedAddress) {     
           that.accountAddress = web3.currentProvider.selectedAddress    
@@ -114,6 +123,8 @@ export default {
         //     that.$store.dispatch("metaMaskConnected", true);  
         // }); 
       } 
+      that.unSubBlocks = await configAbiContract.methods.getUnSubBlocks().call() || 0;
+      that.heighBlock = await that.$web3.eth.getBlockNumber();
       that.getConsumeList();
    
   },
@@ -167,16 +178,20 @@ export default {
               if(full.State ===1){
                    return ''
               }else{
-                var btnToPurchase = "btnPurchase" + full.rowNum;
-                $(that.purchaseTableName).undelegate("tbody #" + btnToPurchase, "click");
-                $(that.purchaseTableName).on("click", "tbody #" + btnToPurchase,
-                  function () {
-                      that.CanclePurchase(full.Hash,full.Block);
-                  }
-                ); 
-                var operator = '<button id='+ btnToPurchase +' class="btn btn-info">'+ that.$t("purchase.submitButton") +'</button> ';
-                
-                return operator;
+                if( that.heighBlock > parseInt(full.Block) + parseInt(that.unSubBlocks)){
+                  return ''
+                }else{
+                  var btnToPurchase = "btnPurchase" + full.rowNum;
+                  $(that.purchaseTableName).undelegate("tbody #" + btnToPurchase, "click");
+                  $(that.purchaseTableName).on("click", "tbody #" + btnToPurchase,
+                    function () {
+                        that.CanclePurchase(full.Hash,full.Block);
+                    }
+                  ); 
+                  var operator = '<button id='+ btnToPurchase +' class="btn btn-info">'+ that.$t("purchase.submitButton") +'</button> ';
+                  return operator;
+                }
+              
               }              
             },
           }
@@ -185,10 +200,9 @@ export default {
       });
     }, 
     async CanclePurchase(hashSeed,block){
-        const that = this
-        //获取当前块的高度
+        const that = this 
         const heighBlock = await that.$web3.eth.getBlockNumber();
-        if(parseInt(block) + parseInt(blockRange) < parseInt(heighBlock)){
+        if(parseInt(block) + parseInt(that.unSubBlocks) < parseInt(heighBlock)){
            utils.toastMsgError(that.$t("common.commonTips.msgTip5"),that.$t("common.commonTips.msgTip14"),"toast-top-center")
           return ;
         }
