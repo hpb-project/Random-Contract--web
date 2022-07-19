@@ -34,46 +34,40 @@
             </div>    
             <!-- Modal --> 
             <div class="modal fade" id="addTaskModal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
+                <div class="modal-dialog modal-dialog-centered  modal-lg" role="document">
+                    <div class="modal-content" >
                         <div class="modal-body">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x close" data-dismiss="modal"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                             <div class="compose-box">
                                 <div class="compose-content" id="addTaskModalTitle">
-                                    <h5 id="hTitle1" class="task-heading">创建种子</h5>                            
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                          <div class="d-flex mail-to mb-4">
-                                              <span id="hLable1">Seed</span>
-                                              <div class="w-100">
-                                                <textarea  v-model="seed" :disabled="isDisabled" maxlength="66" placeholder="0x"  class="form-control"  rows="2" cols="30"></textarea> 
-                                              </div> 
-                                          </div>  
-                                        </div>
-                                        <div class="col-md-12">
-                                          <div class="d-flex mail-to mb-4">
-                                              <span id="hLable2">Hash Seed</span>
-                                              <div class="w-100">
-                                                <textarea  v-model="hashSeed" disabled="disabled" readonly="readonly"  placeholder="0x"  class="form-control"  rows="2" cols="30"></textarea> 
-                                              </div> 
+                                    <h5 id="hTitle1" class="task-heading">创建种子</h5>     
+                                    <div class="statbox widget box box-shadow">
+                                      <div class="form-group mb-4">
+                                            <label id="hLable1">Seed</label>     
+                                           <div class="input-group mb-4">
+                                               <input type="text" placeholder="0x"  class="form-control"  v-model="seed" :disabled="isDisabled"> 
+                                              <div class="input-group-append" v-if="isShowGenerate">
+                                                 <button  class="btn btn-primary"  @click="handlerGenerate">{{$t("mySubmit.generate")}}</button>
+                                              </div>
                                           </div>
+
+                                             <small id="emailHelp1" class="form-text text-muted">{{$t("mySubmit.generaterule")}}</small>
                                         </div>
-                                          <div class="col-md-12">
-                                          <div class="d-flex mail-to mb-4">
-                                              <span id="hLable3">HRG Balance</span>
-                                              <div class="w-100 "> 
-                                                <input type="text" id="disabledTextInput" v-model="HRGBalance" class="form-control" disabled="disabled" readonly="readonly">                                           
-                                              </div> 
-                                          </div>
+                                        <div class="form-group mb-4">
+                                            <label id="hLable2">Hash Seed</label>                                            
+                                            <input type="text" placeholder="0x"  class="form-control" v-model="hashSeed" disabled="disabled" readonly="readonly"  > 
+                                        </div>
+                                        
+                                        <div class="form-group mb-4">
+                                            <label id="hLable3">HRG Balance</label>   
+                                            <input type="text" id="disabledTextInput" v-model="HRGBalance" class="form-control" disabled="disabled" readonly="readonly">                                           
                                         </div>
 
-                                        <div  class="col-md-12">
+                                        <div   class="form-group mb-4">
                                           <p class="">
-                                            {{showMsgTips}}
-                                            <!-- {{$t("common.commonTips.msgTip15")}} -->
+                                            {{showMsgTips}} 
                                           </p>
                                         </div>
-
                                     </div>   
                                 </div>
                             </div>
@@ -114,6 +108,7 @@ export default {
       blockMax:0, //提交最大值
       lockToken:0, //质押数量
       lockTokenCount:0,//未转换位数的质押数量
+      isShowGenerate:true,//是否显示自动生成按钮
 
     }
   },
@@ -241,10 +236,23 @@ export default {
       }
       return result;
     }, 
+    //自动生成
+    handlerGenerate(){
+      const that = this;
+      that.seed =that.getRamNumber();
+      oracleAbiContract.methods.getHash(that.seed).call(null,function(error,result){
+          if(error !=null){
+              console.log('getHash-------->',error)
+          }else{
+            that.hashSeed = result;
+          } 
+      }) 
+    },
     //创建种子
     createSeeds(){ 
       const that = this;
       that.isDisabled = false;
+      that.isShowGenerate = true;
       that.curType = 0;
       //显示批准
       that.approveShow =true;
@@ -252,7 +260,8 @@ export default {
       that.approveDisabled = false;
       //确认不可用
       that.btnDisabled = true;
-
+      that.seed = '';
+      that.hashSeed = ''
       if(that.$i18n.locale === 'zh'){
         $("#hTitle1").html('创建种子')
         $("#hLable1").html('输入种子')
@@ -265,14 +274,8 @@ export default {
         $("#hLable2").html('Input Seed Hash')
         $("#hLable3").html('HRG Balance')
       } 
-      that.seed =that.getRamNumber()
-      oracleAbiContract.methods.getHash(that.seed).call(null,function(error,result){
-          if(error !=null){
-              console.log('getHash-------->',error)
-          }else{
-            that.hashSeed = result;
-          } 
-      }) 
+      
+
       $('#addTaskModal').modal('show');
     },
     //批准
@@ -323,6 +326,8 @@ export default {
         that.approveShow =false;
         //种子不能填写
         that.isDisabled = true; 
+        that.isShowGenerate = false;
+        that.btnDisabled =false;
         if(that.$i18n.locale === 'zh'){
           $("#hTitle1").html('提交种子')
           $("#hLable3").html('HRG余额')
@@ -482,8 +487,9 @@ export default {
     seed:{
       immediate:false,
       handler: function (newval,oldval) {
-        const that = this;
+        const that = this; 
         if(oldval =='') return 
+        if(newval =='') return 
         if(!newval.toUpperCase().startsWith('0X')){
             that.hashSeed = '';
             utils.toastMsgError(that.$t("common.commonTips.msgTip4"),that.$t("common.commonTips.msgTip2"),"toast-top-center")
@@ -527,6 +533,9 @@ export default {
 </script>
 <style>
 
+.ft13{
+  font-size: 13px;
+}
 .modal-content {  border: none; }
 .modal-content svg.close {
     position: absolute;
