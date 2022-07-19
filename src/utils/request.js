@@ -3,11 +3,12 @@ import axios from 'axios'
 import { VueAxios } from './axios' 
 
 //自动设置后台服务 baseURL (也可以手工指定写死项目名字)
-let baseDomain = window._CONFIG['domianURL'];
+/* let baseDomain = window._CONFIG['domianURL'];
 let baseProject = baseDomain.substring(baseDomain.lastIndexOf("/"));
 console.log("baseDomain= ",baseDomain)
-console.log("baseProject= ",baseProject)
-
+console.log("baseProject= ",baseProject) */
+// let baseProject = "/api1";
+let baseProject = "/";
 // 创建 axios 实例
 const service = axios.create({ 
   baseURL: baseProject, // api base_url

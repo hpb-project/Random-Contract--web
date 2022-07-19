@@ -4,6 +4,7 @@ const mySubmit={
         createButton: "创建新种子", 
         submitButton: "提交种子", 
         btnOperator: "确认", 
+        btnApproval: "批准", 
         tabColumns: {
             'rowNum': '序号',
             'Block': '提交块号', 
@@ -18,6 +19,7 @@ const mySubmit={
         createButton: "Create New Seed",   
         submitButton: "Submit Seed",      
         btnOperator: "Submit",      
+        btnApproval: "Approve", 
         tabColumns: {
             'rowNum': 'Index',
             'Block': 'Submit Block', 

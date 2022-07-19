@@ -35,6 +35,11 @@ const routes = [{
       name: 'MySubmit',
       component: () =>
         import( /* webpackChunkName: "mysubmit" */ "../pages/MySubmit.vue"),
+    }, {
+      path: '/mybalance',
+      name: 'MyBalance',
+      component: () =>
+        import( /* webpackChunkName: "mysubmit" */ "../pages/MyBalance.vue"),
     },
   ]
 }

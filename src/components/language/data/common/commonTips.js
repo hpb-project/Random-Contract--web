@@ -14,10 +14,11 @@ const commonTips = {
         msgTip12:'正在加载数据中，请稍后...',     
         msgTip13:'获取数据失败!',
         msgTip14:'已经超过验证截止区块!',
-        msgTip15:'本操作需要质押 ${block} HRG Token. 提交成功后，您在 ${block} 个区块内完成种子验证可退回押金并获得奖励，超过 ${block} 区块后将无法验证，押金不予退回。',
+        msgTip15:'本操作需要质押 ${lockToken} HRG Token. 提交成功后，您在 ${block} 个区块内完成种子验证可退回押金并获得奖励，超过 ${block} 区块后将无法验证，押金不予退回。',
         msgTip16:'您当前的HRG为0，请先充值',
         msgTip17:'HRG 数量不足，请先充值',
-        msgTip18:'${block}个区块后无法取消购买。'
+        msgTip18:'${block}个区块后无法取消购买。',
+        msgTip19:'输入错误，请输入42位16进制字符串',
 
     },
     EN: {  //英文翻译
@@ -30,7 +31,7 @@ const commonTips = {
         msgTip7:'Transaction Failure!',  
         msgTip8:'Cancel Transaction Success!',
         msgTip9:'Cancel Transaction Failure!',
-        msgTip10:'Transaction Submitted, Please wait......',
+        msgTip10:'Transaction Submitted, please wait......',
         msgTip11:'The Vote Quota Is Insufficient. Your Current Available Vote Quota Is XXX',
         msgTip12:'Loading data,waiting....', 
         msgTip13: "Get Data Failed!",
@@ -38,7 +39,8 @@ const commonTips = {
         msgTip15: "This operation requires pledge ${block} HRG token, you can return the deposit and get rewards after completing seed verification within ${block} blocks. If you exceed ${block} blocks, you will not be able to verify and the deposit will not be returned.",
         msgTip16:'Your HRG is 0, please recharge first！',
         msgTip17:'HRG Token not enough, please recharge first!',
-        msgTip18:'Can not cancel the purchase after ${block} blocks。'
+        msgTip18:'Can not cancel the purchase after ${block} blocks。',
+        msgTip19:'Input error,please enter 42 bit hex string',
     }
 }
 export default commonTips  //需要暴露出去

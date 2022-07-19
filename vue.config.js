@@ -11,11 +11,21 @@ module.exports = {
     port:8080,
     https: false,
     open: true,
-    proxy: {
-      '/api': {
+    proxy: { 
+      '/api1/': {
         target: 'http://3.11.211.183:38100',
-        changeOrigin: true
-      }
+        changeOrigin: true,
+        pathRewrite: {
+          '^/api1': '/'  
+        } 
+      }, 
+      '/api2/': {
+        target: 'http://52.193.53.3:8011',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/api2': '/'  
+        } 
+      },
     } 
   },
   configureWebpack:config =>{

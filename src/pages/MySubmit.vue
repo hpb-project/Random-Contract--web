@@ -79,7 +79,8 @@
                             </div>
                         </div>
                         <div class="modal-footer"> 
-                            <button class="btn btn-info"  :disabled="btnDisabled" @click="handlerSubmit" >{{$t("mySubmit.btnOperator")}}</button>
+                            <button  class="btn btn-info" v-if="approveShow" :disabled="approveDisabled" @click="handlerApproval" >{{$t("mySubmit.btnApproval")}}</button>
+                            <button  class="btn btn-info"  :disabled="btnDisabled" @click="handlerSubmit" >{{$t("mySubmit.btnOperator")}}</button>
                         </div>
                     </div>
                 </div>
@@ -108,7 +109,11 @@ export default {
       HRGBalance:0, //hrg余额
       mySubmitTableName: "#mySubmitTable",
       btnDisabled:false,
-      blockMax:0 //提交最大值
+      approveDisabled:false,//批准可用
+      approveShow:true,//批准可以显示
+      blockMax:0, //提交最大值
+      lockToken:0, //质押数量
+      lockTokenCount:0,//未转换位数的质押数量
 
     }
   },
@@ -116,7 +121,7 @@ export default {
   computed: {
     showMsgTips(){
       let msg = this.$t("common.commonTips.msgTip15");
-      return msg.replaceAll('${block}',this.blockMax)
+      return msg.replaceAll('${block}',this.blockMax).replaceAll("${lockToken}",this.lockToken)
     },
     getLanguage() {
       return this.$i18n.locale;
@@ -155,6 +160,9 @@ export default {
           that.accountAddress = web3.currentProvider.selectedAddress
       } 
       that.blockMax = await configAbiContract.methods.getMaxVerifyBlocks().call() || 0;
+      //质押数量
+      that.lockTokenCount= await configAbiContract.methods.getDepositAmount().call()|| 0;
+      that.lockToken = that.$web3.utils.fromWei(that.lockTokenCount||0,'ether');
       that.getSubmitList();
   },
 
@@ -238,13 +246,21 @@ export default {
       const that = this;
       that.isDisabled = false;
       that.curType = 0;
+      //显示批准
+      that.approveShow =true;
+      //批准可用
+      that.approveDisabled = false;
+      //确认不可用
+      that.btnDisabled = true;
+
       if(that.$i18n.locale === 'zh'){
-        $("#hTitle").html('创建种子')
+        $("#hTitle1").html('创建种子')
         $("#hLable1").html('输入种子')
         $("#hLable2").html('输入种子哈希')
         $("#hLable3").html('HRG余额')
+       
       }else{
-        $("#hTitle").html('Create Seed')
+        $("#hTitle1").html('Create Seed')
         $("#hLable1").html('Input Seed')
         $("#hLable2").html('Input Seed Hash')
         $("#hLable3").html('HRG Balance')
@@ -256,20 +272,64 @@ export default {
           }else{
             that.hashSeed = result;
           } 
-      })
+      }) 
       $('#addTaskModal').modal('show');
+    },
+    //批准
+    async handlerApproval(){ 
+      const that = this  
+      try{       
+          that.approveDisabled =true;
+          if (!that.seed.startsWith('0x') || that.seed.length != 66|| that.seed.length != 66) {      
+              utils.toastMsgError(that.$t("common.commonTips.msgTip4"),that.$t("common.commonTips.msgTip2"),"toast-top-center")
+              that.approveDisabled =false;
+              return ;
+        }
+        if(that.HRGBalance === '0'){
+            utils.toastMsgError(that.$t("common.commonTips.msgTip4"),that.$t("common.commonTips.msgTip16"),"toast-top-center")
+            that.approveDisabled =false;
+            return ; 
+        } 
+        if(parseInt(that.lockToken) >parseInt(that.HRGBalance)){
+            that.approveDisabled =false;
+            utils.toastMsgError(that.$t("common.commonTips.msgTip4"),that.$t("common.commonTips.msgTip17"),"toast-top-center")
+            return ; 
+        }
+        
+        let tx = await  erc20Signed.approve(depositaddr, that.lockTokenCount);
+     
+        
+        //等待approve完成
+        utils.toastShowWait(that.$t("common.commonTips.msgTip4"), that.$t("common.commonTips.msgTip10"), "toast-top-center");
+        await tx.wait();
+        console.log('tx--------->',tx);
+        utils.toastClear(); 
+        that.btnDisabled =false; 
+ 
+      }catch(e){
+        that.approveDisabled =false;
+        that.btnDisabled =true; 
+        utils.toastClear();
+        utils.toastMsgError(that.$t("common.commonTips.msgTip5"),that.$t("common.commonTips.msgTip9") + "," + 
+            e.code + "," + e.message, "toast-top-center"); 
+        console.log('-------',e)
+      } 
+       
     },
     //提交
     async submitSeeds(hashSeed,endBlock){
-        const that = this;
+        const that = this; 
+        //不显示批准
+        that.approveShow =false;
+        //种子不能填写
         that.isDisabled = true; 
         if(that.$i18n.locale === 'zh'){
-          $("#hTitle").html('提交种子')
+          $("#hTitle1").html('提交种子')
           $("#hLable3").html('HRG余额')
           $("#hLable1").html('输入种子')
           $("#hLable2").html('输入种子哈希')
         }else{
-          $("#hTitle").html('Submit Seed')
+          $("#hTitle1").html('Submit Seed')
           $("#hLable1").html('Input Seed')
           $("#hLable2").html('Input Seed Hash')
           $("#hLable3").html('HRG Balance')
@@ -294,30 +354,19 @@ export default {
               utils.toastMsgError(that.$t("common.commonTips.msgTip4"),that.$t("common.commonTips.msgTip2"),"toast-top-center")
               that.btnDisabled =false;
               return ;
-        }
+          }
         if(that.HRGBalance === '0'){
             utils.toastMsgError(that.$t("common.commonTips.msgTip4"),that.$t("common.commonTips.msgTip16"),"toast-top-center")
             that.btnDisabled =false;
             return ; 
         }
 
-        if(this.curType === 0){   
-           const lockToken= await configAbiContract.methods.getDepositAmount().call()
-           const lockTokenCount = that.$web3.utils.fromWei(lockToken||0,'ether');
-       
-          if(parseInt(lockTokenCount) >parseInt(that.HRGBalance)){
+        if(this.curType === 0){    
+         /*  if(parseInt(that.lockToken) >parseInt(that.HRGBalance)){
              that.btnDisabled =false;
              utils.toastMsgError(that.$t("common.commonTips.msgTip4"),that.$t("common.commonTips.msgTip17"),"toast-top-center")
               return ; 
-          }
-
-          let tx = await  erc20Signed.approve(depositaddr, lockToken);
-          console.log('tx--------->',tx);
-          //等待approve完成
-          utils.toastShowWait(that.$t("common.commonTips.msgTip4"), that.$t("common.commonTips.msgTip10"), "toast-top-center");
-          await tx.wait();
-          utils.toastClear(); 
-            
+          } */
           //提交
           oracleAbiContract.methods.commit(that.hashSeed).send({from:that.accountAddress})
             .on('transactionHash', function(hash){
@@ -333,6 +382,7 @@ export default {
                 $('#addTaskModal').modal('hide');   
                 //重新加载数据...
                 $(that.mySubmitTableName).dataTable().fnDestroy();
+                that.btnDisabled =false;
                 that.getSubmitList();  
             })
             .on('error', function(error, receipt) { // 如果交易被网络拒绝并带有交易收据，则第二个参数将是交易收据。
@@ -343,93 +393,31 @@ export default {
                 console.log(error,error)
             });
             
-          // erc20Signed.approve(depositaddr, lockToken).then(
-          //     value =>{   
-          //        setTimeout(function(){
-          //           //创建种子 
-                    
-          //           oracleAbiContract.methods.commit(that.hashSeed).send({from:that.accountAddress})
-          //           .on('transactionHash', function(hash){
-          //             localStorage.setItem(that.hashSeed,that.seed);
-          //             utils.toastShowWait(that.$t("common.commonTips.msgTip4"), that.$t("common.commonTips.msgTip10"), "toast-top-center");
-          //             console.log('--------->transactionHash:',hash)
-          //           })
-          //           .on('confirmation', function(confirmationNumber, receipt){
-          //             console.log('--------->confirmation:',receipt)
-          //           })
-          //           .on('receipt', function(receipt){
-          //             console.log('--------->receipt:',receipt)
-          //             utils.toastClear();
-          //             //本地保存数据                     
-          //             utils.toastMsgSuccess(that.$t("common.commonTips.msgTip4"),that.$t("common.commonTips.msgTip6"), "toast-top-center")
-          //             $('#addTaskModal').modal('hide');   
-          //             //重新加载数据...
-          //             that.getSubmitList();
-                        
-                     
-          //           })
-          //           .on('error', function(error, receipt) { // 如果交易被网络拒绝并带有交易收据，则第二个参数将是交易收据。
-          //             utils.toastClear();
-          //             utils.toastMsgError(that.$t("common.commonTips.msgTip5"),that.$t("common.commonTips.msgTip9") + "," + 
-          //                         error.code + "," + error.message, "toast-top-center");
-          //              console.log(error,error)
-          //           });      
-          //           /* oracleAbiContract.methods.commit(that.hashSeed).send({from:that.accountAddress}, 
-          //                 function(error, transactionHash){
-          //                   if(error !=null){
-          //                       utils.toastMsgError(that.$t("common.commonTips.msgTip5"),that.$t("common.commonTips.msgTip9") + "," + 
-          //                         error.code + "," + error.message, "toast-top-center");
-          //                       console.log(error,transactionHash)
-          //                   }else{
-          //                     //本地保存数据
-          //                     localStorage.setItem(that.hashSeed,that.seed);
-          //                     utils.toastMsgSuccess(that.$t("common.commonTips.msgTip4"),that.$t("common.commonTips.msgTip6"), "toast-top-center")
-          //                     $('#addTaskModal').modal('hide');   
-          //                     console.log("Commit----- "+transactionHash); 
-          //                   } 
-          //           }); */
-          //        },1000)
-          //     },
-          //     error1=>{
-          //       utils.toastMsgError(that.$t("common.commonTips.msgTip5"),that.$t("common.commonTips.msgTip9") + "," + 
-          //         error1.code + "," + error1.message, "toast-top-center");
-          //     }
-          // );  
-           //获取抵押的token数量
-           /*  configAbiContract.methods.getDepositAmount().call().then(
-              amount=>{ 
-                erc20Signed.approve(depositaddr, amount).then(
-                  value =>{ 
-                      //创建种子                  
-                      oracleAbiContract.methods.commit(that.hashSeed).send({from:that.accountAddress}, 
-                            function(error, transactionHash){
-                              if(error !=null){
-                                  utils.toastMsgError(that.$t("common.commonTips.msgTip5"),that.$t("common.commonTips.msgTip9") + "," + 
-                                    error.code + "," + error.message, "toast-top-center");
-                                  console.log(error,transactionHash)
-                              }else{
-                                //本地保存数据
-                                localStorage.setItem(that.hashSeed,that.seed);
-                                utils.toastMsgSuccess(that.$t("common.commonTips.msgTip4"),that.$t("common.commonTips.msgTip6"), "toast-top-center")
-                                $('#addTaskModal').modal('hide');   
-                                console.log("Commit----- "+transactionHash); 
-                              } 
-                      });
-                  },
-                  error1=>{
-                    utils.toastMsgError(that.$t("common.commonTips.msgTip5"),that.$t("common.commonTips.msgTip9") + "," + 
-                      error1.code + "," + error1.message, "toast-top-center");
-                  }
-                );  
-              },
-              (error)=>{
-                console.log('-------getDepositAmount',error)
-              }
-            ) */
+          
 
         }else{           
           //提交种子
-          oracleAbiContract.methods.reveal(that.hashSeed,that.seed).send({from:that.accountAddress},function(error,result){
+           oracleAbiContract.methods.reveal(that.hashSeed,that.seed).send({from:that.accountAddress})
+            .on('transactionHash', function(hash){
+                utils.toastShowWait(that.$t("common.commonTips.msgTip4"), that.$t("common.commonTips.msgTip10"), "toast-top-center");
+                console.log('--------->transactionHash:',hash)
+            })
+            .on('receipt', function(receipt){
+                $('#addTaskModal').modal('hide');   
+                 utils.toastClear();
+                //本地保存数据                     
+                utils.toastMsgSuccess(that.$t("common.commonTips.msgTip4"),that.$t("common.commonTips.msgTip6"), "toast-top-center")
+                $('#addTaskModal').modal('hide');   
+                //重新加载数据...
+                $(that.mySubmitTableName).dataTable().fnDestroy();
+                that.btnDisabled =false;
+                that.getSubmitList();  
+            })
+            .on('error', function(error, receipt) { // 如果交易被网络拒绝并带有交易收据，则第二个参数将是交易收据。
+                that.btnDisabled =false;
+                utils.toastMsgError(that.$t("common.commonTips.msgTip4"), that.$t("common.commonTips.msgTip7")+ error.message, "toast-top-center");
+            });
+         /*  oracleAbiContract.methods.reveal(that.hashSeed,that.seed).send({from:that.accountAddress},function(error,result){
               if(error !=null){
                 that.btnDisabled =false;
                 utils.toastMsgError(that.$t("common.commonTips.msgTip4"), that.$t("common.commonTips.msgTip7")+ error.message, "toast-top-center");
@@ -438,7 +426,7 @@ export default {
                 utils.toastMsgSuccess(that.$t("common.commonTips.msgTip4"),that.$t("common.commonTips.msgTip6"), "toast-top-center")
                 console.log("Commit "+result); 
               }
-          })
+          }) */
         }
       }catch(e){
         that.btnDisabled =false;
@@ -448,17 +436,17 @@ export default {
         console.log('-------',e)
       } 
     },
+
     async getSubmitList(){
       const that = this;   
       if(!that.accountAddress) {
         utils.toastMsgError(that.$t("common.commonTips.msgTip5"),that.$t("common.commonTips.msgTip1"),"toast-top-center")
         return ;
-      } 
-     
-      tokenAbiContract.methods.balanceOf(that.accountAddress).call(null,function(err,result){ 
+      }  
+      tokenAbiContract.methods.balanceOf(that.accountAddress).call(null,function(err,result){  
          if(err !==null){
             that.HRGBalance =0;
-         }else{
+         }else{ 
             that.HRGBalance = that.$web3.utils.fromWei(result,'ether');
          }
       });

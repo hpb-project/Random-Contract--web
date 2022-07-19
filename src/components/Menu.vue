@@ -36,6 +36,13 @@
                             <span>{{$t("common.topMenu.purchase") }}</span>
                         </div>                            
                     </a>
+                </li> 
+                <li class="menu single-menu" v-show="IsConnected" :class="{active: 'mybalance' === activePath}" >
+                    <a href="/mybalance"   class="dropdown-toggle autodroprown">
+                        <div class=""> 
+                            <span>{{$t("common.topMenu.balance") }}</span>
+                        </div>                            
+                    </a>
                 </li>
                  <li class="menu single-menu"   :class="{active: 'document' === activePath}">
                     <a href="/document"   class="dropdown-toggle autodroprown">
@@ -71,6 +78,8 @@ export default {
         that.activePath = 'purchase';
     } else if(path.includes('/mysubmit')){
         that.activePath = 'mysubmit';
+    }else if(path.includes('/mybalance')){
+        that.activePath = 'mybalance';
     }
      
     if(!that.IsConnected && web3.currentProvider.selectedAddress) {     
