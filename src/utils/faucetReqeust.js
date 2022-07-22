@@ -14,7 +14,7 @@ const err = (error) => {
   if (error.response) {
     let data = error.response.data  
     console.log("------异常响应------",error.response.status,data)
-  }
+  } 
   return Promise.reject(error)
 };
 

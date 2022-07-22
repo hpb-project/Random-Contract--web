@@ -7,19 +7,18 @@
                         <div class="widget-heading"> 
                             <h5 class="" style="line-height:37px">
                               {{$t("myBalance.pageName")}}
-                            </h5>
-                             
-                        </div>
-                        
+                            </h5>                             
+                        </div>                        
                     </div>
 
-
-                    <div class="statbox widget box box-shadow"> 
-                     
+                    <div class="statbox widget box box-shadow">                      
                       <div class="widget-header">
                         <div class="row">
                             <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                                  <h4>{{$t("myBalance.Title")}}</h4>
+                                  <h4>
+                                    {{$t("myBalance.Title")}}
+                                     <!-- <span style="color: #888ea8;font-size: 0.875rem;">&nbsp;&nbsp; {{$t("myBalance.desc")}}</span>    -->
+                                  </h4> 
                             </div>
                         </div>
                       </div>
@@ -37,7 +36,16 @@
                                   <input type="text" class="form-control form-control-sm" id="address"v-model="tokenAddress" placeholder="address...0x">
                               </div>
                           </div> 
-                           <button  class="btn btn-primary" name="btnSubmit" :disabled="btnDisabled"   @click="handlerSubmit" >{{$t("myBalance.submitButton")}}</button> 
+                          
+                            <button  class="btn btn-primary" name="btnSubmit" :disabled="btnDisabled"   @click="handlerSubmit" >{{$t("myBalance.submitButton")}}</button> 
+                          
+                          <div class="form-group row  mt-4">
+                           <label  class="col-12 col-form-label col-form-label-sm">
+                             {{$t("myBalance.desc")}}
+                             <br>
+                             {{$t("myBalance.desc2")}}
+                           </label>
+                          </div> 
                       </div>
                      
                     </div>
@@ -102,30 +110,30 @@ export default {
               that.btnDisabled =false;
               return ;
         } 
-
         utils.toastShowWait(that.$t("common.commonTips.msgTip4"), that.$t("common.commonTips.msgTip10"), "toast-top-center");
-
         let parameter = {"network":"mainnet", "to":that.tokenAddress} ; 
-        
-        try{
-          getToken(parameter).then(function(result){
-             utils.toastClear();
-            that.btnDisabled = false; 
-            if(result.error==='200'){
-              that.getTokenBalance();
-              utils.toastMsgSuccess(that.$t("common.commonTips.msgTip4"),that.$t("common.commonTips.msgTip6"), "toast-top-center")
-            }else{
-              utils.toastMsgError(that.$t("common.commonTips.msgTip4"), that.$t("common.commonTips.msgTip7")+ ','+ result.err_msg, "toast-top-center");
-            } 
-        });  
-        }catch(e){
-          that.btnDisabled = false;
-          utils.toastClear();
-          utils.toastMsgError(that.$t("common.commonTips.msgTip4"), that.$t("common.commonTips.msgTip7")+ e, "toast-top-center");
-          console.log(e);
-        }
-        
-        
+        getToken(parameter).then(function(result){
+              utils.toastClear();
+              that.btnDisabled = false;  
+              
+              if(result.error==='200'){
+                // that.getTokenBalance(); 
+                const sucHtml = '<br> <a href="https://hscan.org/tx/'+result.data+'" target="_blank">'+that.$t("common.commonTips.msgTip20") +'</a>';
+                utils.toastMsgSuccess(that.$t("common.commonTips.msgTip4"),that.$t("common.commonTips.msgTip6") + sucHtml, "toast-top-center")
+              }else{
+
+                utils.toastMsgError(that.$t("common.commonTips.msgTip4"), 
+                  that.$t("common.commonTips.msgTip7")+ ','+ result.err_msg + ","+sucHtml, 
+                 "toast-top-center");
+              } 
+          }).catch(err=>{
+              that.btnDisabled = false;
+              utils.toastClear(); 
+              
+              utils.toastMsgError(that.$t("common.commonTips.msgTip4"), that.$t("common.commonTips.msgTip7")+ err.toString(), "toast-top-center");
+              console.log(e);
+          });  
+
 
       }
 
@@ -137,6 +145,7 @@ export default {
       handler: function (newval) {
         const that = this;
         that.accountAddress = newval;
+        that.tokenAddress = newval;
         that.getTokenBalance();
       },
     }

@@ -19,6 +19,7 @@ const commonTips = {
         msgTip17:'HRG 数量不足，请先充值',
         msgTip18:'${block}个区块后无法取消购买。',
         msgTip19:'输入错误，请输入42位16进制字符串',
+        msgTip20:'点击查看详情',
 
     },
     EN: {  //英文翻译
@@ -39,8 +40,9 @@ const commonTips = {
         msgTip15: "This operation requires pledge ${block} HRG token, you can return the deposit and get rewards after completing seed verification within ${block} blocks. If you exceed ${block} blocks, you will not be able to verify and the deposit will not be returned.",
         msgTip16:'Your HRG is 0, please recharge first！',
         msgTip17:'HRG Token not enough, please recharge first!',
-        msgTip18:'Can not cancel the purchase after ${block} blocks。',
+        msgTip18:'Can not cancel the purchase after ${block} blocks.',
         msgTip19:'Input error,please enter 42 bit hex string',
+        msgTip20:'Look Detail',
     }
 }
 export default commonTips  //需要暴露出去

@@ -6,7 +6,6 @@
                     <div class="widget widget-chart-three">
                         <div class="widget-heading"> 
                             <h5 class="" style="line-height:37px">{{$t("mySubmit.pageName")}}</h5> 
-
                             <div class="dropdown  custom-dropdown">  
                                 <button class="btn btn-outline-info " @click="createSeeds">{{$t("mySubmit.createButton")}}</button> 
                             </div>
@@ -49,9 +48,8 @@
                                               <div class="input-group-append" v-if="isShowGenerate">
                                                  <button  class="btn btn-primary"  @click="handlerGenerate">{{$t("mySubmit.generate")}}</button>
                                               </div>
-                                          </div>
-
-                                             <small id="emailHelp1" class="form-text text-muted">{{$t("mySubmit.generaterule")}}</small>
+                                          </div> 
+                                          <small id="emailHelp1" class="form-text text-muted" style="font-size:14px;">{{$t("mySubmit.generaterule")}}</small>
                                         </div>
                                         <div class="form-group mb-4">
                                             <label id="hLable2">Hash Seed</label>                                            

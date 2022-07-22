@@ -22,7 +22,7 @@
 
             <ul class="navbar-item flex-row nav-dropdowns">
                 
-                 <li  v-show="IsConnected"  class="nav-item  " >
+                 <li  v-show="IsConnected"  class="nav-item " >
                     <a  href="javascript:void(0);" class="btn btn-dark  mb-2   mt-3"   > 
                         <img class="bg-img" src="assets/img/amount.svg" alt="" width="20px" /> 
                         <span class="ml-1">{{ ChainId }}</span >                      
@@ -30,7 +30,7 @@
                     </a> 
                 </li>
 
-                <li class="nav-item ">
+                <li class="nav-item connect-item ml-1">
                     <a href="javascript:void(0);" v-show="!IsConnected" class="btn btn-dark  mb-2  mt-3" v-on:click="connectWallet">
                         <img class="bg-img" src="assets/img/wallet_new.svg" width="20px" alt="" />  
                         <span class="ml-1" v-show="!IsConnected" >{{ $t('common.navHeader.connectWallet') }}</span > 
@@ -47,7 +47,7 @@
                     </a>
                 </li>
     
-                <li class="nav-item dropdown ml-1">
+                <li class="nav-item dropdown ml-1 connect-item ml-1">
                   <a href="javascript:void(0);" class="btn btn-dark  mb-2 mt-3"  v-on:click="switchHpbNetWork" > 
                         <svg t="1653264992107" class="icon" viewBox="0 0 1028 1024" version="1.1" 
                         xmlns="http://www.w3.org/2000/svg" p-id="3920" width="128" height="128">
@@ -57,7 +57,7 @@
                          <span class="ml-1"> {{ $t('common.navHeader.swithHpbNetWork') }}</span >  
                   </a> 
                 </li>
-                <li class="nav-item dropdown language-dropdown more-dropdown  mt-2">
+                <li class="nav-item dropdown language-dropdown more-dropdown  mt-2 ml-1 mr-2" style="width:60px;text-align:right;">
                     <div class="dropdown custom-dropdown-icon">
                         <a class="dropdown-toggle" href="#" role="button" id="customDropdown" data-toggle="dropdown" 
                             aria-haspopup="true" aria-expanded="false">

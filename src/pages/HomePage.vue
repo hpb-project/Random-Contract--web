@@ -1,13 +1,35 @@
 <template>  
     <div id="content" class="main-content">
         <div class="layout-px-spacing">
-            <div class="page-header">
+           <!--  <div class="page-header">
                 <div class="page-title">
                     <h5>{{$t('homePage.pageName')}}</h5>
                 </div> 
-            </div> 
-            <div class="row layout-top-spacing"> 
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing">
+            </div>  -->
+            <div class="row">
+              <!-- banner -->
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12" style="margin-top:10px;">
+                     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators">
+                            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active m"></li>
+                            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                        </ol>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img class="d-block w-100" style="height:350px" src="assets/img/pic1.jpg" alt="First slide">
+                            </div>
+                            <div class="carousel-item">
+                                <img class="d-block w-100" style="height:350px"  src="assets/img/pic2.jpg" alt="Second slide">
+                            </div>
+                            <div class="carousel-item">
+                                <img class="d-block w-100" style="height:350px"  src="assets/img/pic3.jpg" alt="Third slide">
+                            </div>
+                        </div> 
+                    </div>
+                </div> 
+
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 "  style="margin-top:10px;">
                     <div class="row widget-statistic">
                         <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12 mb-2">
                             <div class="card">

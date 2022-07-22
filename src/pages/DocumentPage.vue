@@ -34,7 +34,7 @@
                                 </li> 
                                 <li class="text-center mt10">
                                     <p  class="text-left">
-                                        After a period of time, the committer performs the second submission and commits the Seed to the Oracle. The Oracle recalculates the SeedHash and compares it with that of the first submission. After the verification is passed, the Seed is legal and can be used after.
+                                        After a period of time (within 100000 blocks), the committer performs the second submission and commits the Seed to the Oracle. The Oracle recalculates the SeedHash and compares it with that of the first submission. After the verification is passed, the Seed is legal and can be used after.
                                     </p>
                                      <img src="assets/docimg/3.png" width="500" alt="">
                                 </li> 

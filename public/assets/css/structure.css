@@ -1091,7 +1091,7 @@ code {
   .navbar {
     padding: 10px 0 10px 0;
     margin: 0 16px; }
-    .navbar .navbar-item .nav-item.user-profile-dropdown a.user .media .media-body, .navbar .nav-logo {
+    .navbar .navbar-item .nav-item.user-profile-dropdown a.user .media .media-body, .navbar .nav-logo ,.connect-item{
       display: none; }
     .navbar .navbar-item .nav-item.search-animated {
       margin-left: 3px; }

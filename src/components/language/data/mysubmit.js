@@ -6,7 +6,7 @@ const mySubmit={
         btnOperator: "确认", 
         btnApproval: "批准", 
         generate: "自动生成", 
-        generaterule:'简要说明',
+        generaterule:'生成规则：账户地址+时间戳+16进制随机数',
         tabColumns: {
             'rowNum': '序号',
             'Block': '提交块号', 
@@ -23,7 +23,7 @@ const mySubmit={
         btnOperator: "Submit",      
         btnApproval: "Approve", 
         generate: "Generate", 
-        generaterule:'remark',
+        generaterule:'Generate rule:account address + timestamp + random number of hex',
         tabColumns: {
             'rowNum': 'Index',
             'Block': 'Submit Block', 
