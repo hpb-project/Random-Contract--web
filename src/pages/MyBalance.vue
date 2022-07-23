@@ -114,24 +114,20 @@ export default {
         let parameter = {"network":"mainnet", "to":that.tokenAddress} ; 
         getToken(parameter).then(function(result){
               utils.toastClear();
-              that.btnDisabled = false;  
-              
+              that.btnDisabled = false;   
               if(result.error==='200'){
                 // that.getTokenBalance(); 
                 const sucHtml = '<br> <a href="https://hscan.org/tx/'+result.data+'" target="_blank">'+that.$t("common.commonTips.msgTip20") +'</a>';
                 utils.toastMsgSuccess(that.$t("common.commonTips.msgTip4"),that.$t("common.commonTips.msgTip6") + sucHtml, "toast-top-center")
               }else{
 
-                utils.toastMsgError(that.$t("common.commonTips.msgTip4"), 
-                  that.$t("common.commonTips.msgTip7")+ ','+ result.err_msg + ","+sucHtml, 
-                 "toast-top-center");
+                utils.toastMsgError(that.$t("common.commonTips.msgTip4"),  that.$t("common.commonTips.msgTip7")+ ','+ result.err_msg ,   "toast-top-center");
               } 
           }).catch(err=>{
               that.btnDisabled = false;
-              utils.toastClear(); 
-              
+              utils.toastClear();  
               utils.toastMsgError(that.$t("common.commonTips.msgTip4"), that.$t("common.commonTips.msgTip7")+ err.toString(), "toast-top-center");
-              console.log(e);
+              console.log(err);
           });  
 
 
