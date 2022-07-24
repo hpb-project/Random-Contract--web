@@ -9,23 +9,39 @@
             <div class="row">
               <!-- banner -->
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12" style="margin-top:10px;">
-                     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                    <div id="style1" class="carousel slide style-custom-1" data-ride="carousel">
                         <ol class="carousel-indicators">
-                            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active m"></li>
-                            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                            <li data-target="#style1" data-slide-to="0" class="active"></li>
+                            <li data-target="#style1" data-slide-to="1"></li>
+                            <li data-target="#style1" data-slide-to="2"></li>
                         </ol>
                         <div class="carousel-inner">
                             <div class="carousel-item active">
-                                <img class="d-block w-100" style="height:350px" src="assets/img/pic1.jpg" alt="First slide">
+                                <img class="d-block w-100 slide-image" src="assets/img/banner1.jpg" alt="First slide">
+                               
+                               <!--  <div class="carousel-caption"> 
+                                  <h2 class="hero-title">
+                                    <span>安全、公平的</span> 随机数交易平台
+                                  </h2>  
+                                </div> -->
                             </div>
                             <div class="carousel-item">
-                                <img class="d-block w-100" style="height:350px"  src="assets/img/pic2.jpg" alt="Second slide">
+                                <img class="d-block w-100 slide-image" src="assets/img/banner2.jpg" alt="Second slide">
+                              
                             </div>
                             <div class="carousel-item">
-                                <img class="d-block w-100" style="height:350px"  src="assets/img/pic3.jpg" alt="Third slide">
+                                <img class="d-block w-100 slide-image" src="assets/img/banner3.jpg" alt="Third slide">
+                              
                             </div>
-                        </div> 
+                        </div>
+                       <!--  <a class="carousel-control-prev" href="#style1" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#style1" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a> -->
                     </div>
                 </div> 
 
@@ -489,5 +505,17 @@ export default {
 <style scoped>
   .dataTable{
      text-align:center;
+  }
+  .hero-title {
+    font-weight: normal;
+    color: #ffffff;
+    font-size: 40px;
+    position: relative;
+    margin-bottom: 12px;
+    line-height: 1.3em;
+  }
+  .hero-title > span {
+    font-weight: 700;
+    display: block;
   }
 </style> 
