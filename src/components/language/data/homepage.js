@@ -36,7 +36,12 @@ const info = {
                 sSortAscending: ": 以升序排列此列",
                 sSortDescending: ": 以降序排列此列",
             },
-        }
+        },
+        banner1:"assets/img/banner/banner1.jpg",
+        banner2:"assets/img/banner/banner2.jpg",
+        banner3:"assets/img/banner/banner3.jpg",
+        banner4:"assets/img/banner/banner4.jpg",
+        banner5:"assets/img/banner/banner5.jpg" 
     },
     EN: { //英文翻译
         pageName: "Random Info Show", 
@@ -75,10 +80,12 @@ const info = {
                 sSortAscending: ": activate to sort column ascending",
                 sSortDescending: ": activate to sort column descending"
             }, 
-        },  
-          
-      
-
+        }, 
+        banner1:"assets/img/banner/banner1_en.jpg",
+        banner2:"assets/img/banner/banner2_en.jpg",
+        banner3:"assets/img/banner/banner3_en.jpg",
+        banner4:"assets/img/banner/banner4_en.jpg",
+        banner5:"assets/img/banner/banner5_en.jpg"  
 
     }
 }

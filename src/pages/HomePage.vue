@@ -19,7 +19,7 @@
                         </ol>
                         <div class="carousel-inner">
                             <div class="carousel-item active">
-                                <img class="d-block w-100 slide-image" src="assets/img/banner/banner1.jpg" alt="First slide">
+                                <img class="d-block w-100 slide-image" :src="getBanner1" alt="First slide">
                                <!--  <div class="carousel-caption"> 
                                   <h2 class="hero-title">
                                     <span>安全、公平的</span> 随机数交易平台
@@ -27,17 +27,17 @@
                                 </div> -->
                             </div>
                             <div class="carousel-item">
-                                <img class="d-block w-100 slide-image" src="assets/img/banner/banner2.jpg" alt="Second slide">
+                                <img class="d-block w-100 slide-image" :src="getBanner2" alt="Second slide">
                               
                             </div>
                             <div class="carousel-item">
-                                <img class="d-block w-100 slide-image" src="assets/img/banner/banner3.jpg" alt="Third slide"> 
+                                <img class="d-block w-100 slide-image" :src="getBanner3" alt="Third slide"> 
                             </div>  
                             <div class="carousel-item">
-                                <img class="d-block w-100 slide-image" src="assets/img/banner/banner4.jpg" alt="Four slide"> 
+                                <img class="d-block w-100 slide-image" :src="getBanner4" alt="Four slide"> 
                             </div> 
                              <div class="carousel-item">
-                                <img class="d-block w-100 slide-image" src="assets/img/banner/banner5.jpg" alt="Five slide"> 
+                                <img class="d-block w-100 slide-image" :src="getBanner5" alt="Five slide"> 
                             </div>
                         </div>
                        <!--  <a class="carousel-control-prev" href="#style1" role="button" data-slide="prev">
@@ -274,13 +274,35 @@ export default {
       csupply:'',
       supply:'',
       HRGBalance:0,
-      accountAddress:''
+      accountAddress:'',
+      imageUrl:{
+        banner1:this.$t("homePage.banner1"),
+        banner2:this.$t("homePage.banner2"),
+        banner3:this.$t("homePage.banner3"),
+        banner4:this.$t("homePage.banner4"),
+        banner5:this.$t("homePage.banner5"),
+      }
 
     };
   },
   computed: {
       getLanguage() {
          return this.$i18n.locale;
+      },
+      getBanner1(){
+         return this.$t("homePage.banner1");
+      },
+      getBanner2(){
+         return this.$t("homePage.banner2");
+      },
+      getBanner3(){
+         return this.$t("homePage.banner3");
+      },
+      getBanner4(){
+         return this.$t("homePage.banner4");
+      },
+      getBanner5(){
+         return this.$t("homePage.banner5");
       },
       tableLanguage() {
          return {
