@@ -35,8 +35,7 @@ const tokenabi = setJsonNode.tokenabi;
 const blockRange = setJsonNode.setting.blockRange; 
 const configaddr = setJsonNode.setting.configaddr ; 
 const oracleaddr = setJsonNode.setting.oracleaddr ; 
-const tokenaddr = setJsonNode.setting.tokenaddr ; 
-const depositaddr = setJsonNode.setting.depositaddr ;  
+const tokenaddr = setJsonNode.setting.tokenaddr ;    
 
 const configAbiContract = new web3.eth.Contract(configabi, configaddr);
 const oracleAbiContract = new web3.eth.Contract(oracleabi, oracleaddr);   
@@ -45,7 +44,7 @@ const tokenAbiContract = new web3.eth.Contract(tokenabi, tokenaddr);
 const provider = new ethers.providers.Web3Provider(window.ethereum);
 const signer = provider.getSigner();
 const erc20Contract = new ethers.Contract(tokenaddr, erc20abi, provider);
-const erc20Signed = erc20Contract.connect(signer); 
+const erc20Signed = erc20Contract.connect(signer);  
 export { 
     blockRange,
     configAbiContract,
@@ -53,6 +52,6 @@ export {
     tokenAbiContract,
     erc20Contract,
     erc20Signed,
-    oracleaddr,
-    depositaddr
+    tokenaddr,
+    oracleaddr 
 }

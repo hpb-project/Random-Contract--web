@@ -20,6 +20,7 @@ const commonTips = {
         msgTip18:'${block}个区块后无法取消购买。',
         msgTip19:'输入错误，请输入42位16进制字符串',
         msgTip20:'点击查看详情',
+        msgTip21:'请输入订阅口令',
 
     },
     EN: {  //英文翻译
@@ -43,6 +44,7 @@ const commonTips = {
         msgTip18:'Can not cancel the purchase after ${block} blocks.',
         msgTip19:'Input error,please enter 42 bit hex string',
         msgTip20:'Look Detail',
+        msgTip21:'Please Enter Subscribe Command',
     }
 }
 export default commonTips  //需要暴露出去

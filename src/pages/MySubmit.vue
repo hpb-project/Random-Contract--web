@@ -85,7 +85,7 @@
 <script>
 import Footer from '../components/Footer.vue'; 
 import utils from '../utils/custom';
-import {configAbiContract,oracleAbiContract,depositaddr,erc20Signed,erc20Contract,tokenAbiContract} from '../utils/getContract'
+import {configAbiContract,oracleAbiContract,oracleaddr,erc20Signed,erc20Contract,tokenAbiContract} from '../utils/getContract'
 export default {
   name: "MySubmit",
   components: { Footer },
@@ -160,6 +160,7 @@ export default {
   },
 
   methods: {
+    //初始化列表
     initTable(dataList){
       var that = this;
       that.table = $(that.mySubmitTableName).DataTable({
@@ -225,6 +226,7 @@ export default {
         oLanguage: that.tableLanguage,
       });
     },
+    //产生随机数
     getRamNumber(){
       var result=this.accountAddress; 
       result += Date.now().toString(16)
@@ -234,7 +236,7 @@ export default {
       }
       return result;
     }, 
-    //自动生成
+    //生成Hash
     handlerGenerate(){
       const that = this;
       that.seed =that.getRamNumber();
@@ -295,11 +297,8 @@ export default {
             that.approveDisabled =false;
             utils.toastMsgError(that.$t("common.commonTips.msgTip4"),that.$t("common.commonTips.msgTip17"),"toast-top-center")
             return ; 
-        }
-        
-        let tx = await  erc20Signed.approve(depositaddr, that.lockTokenCount);
-     
-        
+        }    
+        let tx = await  erc20Signed.approve(oracleaddr, that.lockTokenCount);        
         //等待approve完成
         utils.toastShowWait(that.$t("common.commonTips.msgTip4"), that.$t("common.commonTips.msgTip10"), "toast-top-center");
         await tx.wait();
@@ -440,6 +439,7 @@ export default {
       } 
     },
 
+    //获取数据列表
     async getSubmitList(){
       const that = this;   
       if(!that.accountAddress) {

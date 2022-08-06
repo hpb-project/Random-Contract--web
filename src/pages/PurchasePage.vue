@@ -9,6 +9,9 @@
                               {{$t("purchase.pageName")}}
                               <span style="color: #888ea8;font-size: 0.875rem;">&nbsp;&nbsp;{{showMsgTips}}</span>  
                             </h5>
+                            <div class="dropdown  custom-dropdown">  
+                                <button class="btn btn-outline-info " @click="subscribedRandom">{{$t("purchase.btnSubRandom")}}</button> 
+                            </div>
                         </div>
                         
                     </div>
@@ -32,44 +35,104 @@
                     </table>
                 </div> 
             </div>
-              <!-- Modal --> 
-              <div class="modal fade" id="addTaskModal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-                  <div class="modal-dialog modal-dialog-centered" role="document">
-                      <div class="modal-content">
-                          <div class="modal-body">
-                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x close" data-dismiss="modal"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                              <div class="compose-box">
-                                  <div class="compose-content" id="addTaskModalTitle">
-                                      <h5 id="hTitle" class="task-heading">提交种子</h5>                            
-                                      <div class="row">
-                                          <div class="col-md-12">
-                                              <div class="d-flex mail-to mb-4">
-                                                  <span id="hLable">Hash Seed</span>
-                                                  <div class="w-100">
-                                                     <textarea  v-model="hashSeed" placeholder="0x" disabled="disabled" class="form-control" rows="2" cols="30"></textarea>
-                                                  </div>
-                                              </div>
-                                          </div>
-                                      </div>   
-                                  </div>
-                              </div>
-                          </div>
-                          <div class="modal-footer">
-                              <!-- <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Discard</button>  --> 
-                              <button class="btn btn-info" @click="handlerSubmit" >{{$t("purchase.btnOperator")}}</button> 
-                          </div>
-                      </div>
-                  </div>
-              </div>
+            <!-- 取消购买 --> 
+            <div class="modal fade" id="addTaskModal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x close" data-dismiss="modal"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                            <div class="compose-box">
+                                <div class="compose-content" id="addTaskModalTitle">
+                                    <h5 id="hTitle" class="task-heading">提交种子</h5>                            
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="d-flex mail-to mb-4">
+                                                <span id="hLable">Hash Seed</span>
+                                                <div class="w-100">
+                                                    <textarea  v-model="hashSeed" placeholder="0x" disabled="disabled" class="form-control" rows="2" cols="30"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>   
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <!-- <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Discard</button>  --> 
+                            <button class="btn btn-info" @click="handlerSubmit" >{{$t("purchase.btnOperator")}}</button> 
+                        </div>
+                    </div>
+                </div>
+            </div>
         
+            <!-- 订阅 --> 
+            <div class="modal fade" id="subscribeTaskModal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+                <div class="modal-dialog modal-dialog-centered  modal-lg" role="document">
+                    <div class="modal-content" >
+                        <div class="modal-body">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x close" data-dismiss="modal"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                            <div class="compose-box">
+                                <div class="compose-content" id="addTaskModalTitle">
+                                    <h5 class="task-heading">{{$t("purchase.hTitle1")}}</h5>     
+                                    <div class="statbox widget box box-shadow">
+                                      <div class="form-group mb-4">
+                                            <label id="hLable1">{{$t("purchase.HLable1")}}</label>     
+                                           <div class="input-group mb-4">
+                                               <input type="text" ref="inputCommand" :placeholder="$t('purchase.placeHolder')" :disabled="txtdisabled" class="form-control"  v-model="subscribeCommand" >
+                                          </div> 
+                                          <small   class="form-text text-muted" style="font-size:14px;">{{$t("purchase.commandTips")}}</small>
+                                        </div>
+                                        <div class="form-group mb-4">
+                                            <label>{{$t("purchase.HLable2")}}</label>                                            
+                                            <input type="text" placeholder="0x"  class="form-control" :disabled="txtdisabled" v-model="userAddress"  > 
+                                        </div>
+                                        
+                                        <div class="form-group mb-4">
+                                            <label id="hLable3">HRG Balance</label>   
+                                            <input type="text" v-model="HRGBalance" class="form-control" disabled="disabled" readonly="readonly">                                           
+                                        </div>  
+                                    </div>   
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer"> 
+                            <button  class="btn btn-info"  :disabled="approveDisabled" @click="handlerApproval" >{{$t("purchase.btnApproval")}}</button>
+                            <button  class="btn btn-info"  :disabled="btnDisabled" @click="handlerSubscribe" >{{$t("purchase.btnScribed")}}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>   
+            <!-- 随机数查看 --> 
+            <div class="modal fade" id="randomTaskModal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+                <div class="modal-dialog modal-dialog-centered  modal-lg" role="document">
+                    <div class="modal-content" >
+                        <div class="modal-body">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x close" data-dismiss="modal"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                            <div class="compose-box">
+                                <div class="compose-content" id="addTaskModalTitle">
+                                    <h5 class="task-heading">{{$t("purchase.hTitle2")}}</h5>     
+                                    <div class="statbox widget box box-shadow"> 
+                                        <div class="form-group mb-4 mt-4"> 
+                                            <input type="text" v-model="randomCode" class="form-control" disabled="disabled" readonly="readonly">                                           
+                                        </div>  
+                                    </div>   
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">  
+                            <button  class="btn btn-info"   @click="handlerClose" >{{$t("purchase.btnClose")}}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <Footer></Footer>
     </div>
 </template>
 <script>
 import Footer from '../components/Footer.vue';  
-import utils from '../utils/custom';
-import {configAbiContract,oracleAbiContract} from '../utils/getContract'
+import utils from '../utils/custom'; 
+import {configAbiContract,oracleAbiContract,oracleaddr,erc20Signed,tokenAbiContract} from '../utils/getContract'
 export default {
   name: "PurchasePage",
   components: { Footer },
@@ -82,6 +145,15 @@ export default {
       purchaseTableName: "#purchaseTable",
       heighBlock:0,
       unSubBlocks:0,//取消块购买高度
+      btnDisabled:true,
+      approveDisabled:false,//批准可用
+      userAddress:'',//使用者address
+      HRGBalance:0, //hrg余额
+      subscribeCommand:'',
+      lockSubscribeCount:0,//未转换质押数量
+      lockSubscribe:0,//转换后质押数量
+      txtdisabled:false,
+      randomCode:'',//随机数
     }
   },
   computed: {
@@ -123,12 +195,28 @@ export default {
         //     that.$store.dispatch("metaMaskConnected", true);  
         // }); 
       } 
+
+      //余额
+       tokenAbiContract.methods.balanceOf(that.accountAddress).call(null,function(err,result){  
+         if(err !==null){
+            that.HRGBalance =0;
+         }else{ 
+            that.HRGBalance = that.$web3.utils.fromWei(result,'ether');
+         }
+      });
+      //取消订阅块数间隔
       that.unSubBlocks = await configAbiContract.methods.getUnSubBlocks().call() || 0;
+
+      //购买质押数量
+      that.lockSubscribeCount= await configAbiContract.methods.getFee().call()|| 0;
+      that.lockSubscribe = that.$web3.utils.fromWei(that.lockSubscribeCount,'ether');
+      //当前块高度
       that.heighBlock = await that.$web3.eth.getBlockNumber();
       that.getConsumeList();
    
   },
   methods: {
+    //初始化列表
     initTable(dataList){
       var that = this;
       that.table = $(that.purchaseTableName).DataTable({
@@ -175,8 +263,17 @@ export default {
             },
           },
           { widht: "120px",data: "null",render: function (data, type, full, meta) {
-              if(full.State ===1){
-                   return ''
+              if(full.State ===1){ 
+                  var btnToRandom = "btnLookRandom" + full.rowNum;
+                  $(that.purchaseTableName).undelegate("tbody #" + btnToRandom, "click");
+                  $(that.purchaseTableName).on("click", "tbody #" + btnToRandom,
+                    function () {
+                        that.LookRandom(full.Hash);
+                    }
+                  ); 
+                  var operator = '<button id='+ btnToRandom +' class="btn btn-info">'+ that.$t("purchase.randomButton") +'</button> ';
+                  return operator;
+
               }else{
                 if( that.heighBlock > parseInt(full.Block) + parseInt(that.unSubBlocks)){
                   return ''
@@ -198,7 +295,106 @@ export default {
         ], 
         oLanguage: that.tableLanguage,
       });
+    },
+    //显示订阅随机数页面
+    subscribedRandom(){
+      const that = this ;
+      //确认按钮禁用
+      that.btnDisabled =true;
+      //批准按钮可以
+      that.approveDisabled =false;
+      //文字可以编辑
+      that.txtdisabled = false ;
+      that.userAddress = that.accountAddress; 
+      $('#subscribeTaskModal').modal('show') ; 
+      // this.$nextTick(() => {  
+      //   this.$refs.inputCommand.focus(); 
+      // },1000)
     }, 
+    controlDiabled(){ 
+      this.approveDisabled =false;
+      this.txtdisabled = false ;
+      this.btnDisabled =true; 
+    },
+    //批准
+    async handlerApproval(){ 
+      const that = this 
+      const str1 = this.userAddress; 
+      that.approveDisabled =true; 
+      that.txtdisabled = true ;
+      try{ 
+        if(that.HRGBalance === '0'){
+            utils.toastMsgError(that.$t("common.commonTips.msgTip4"),that.$t("common.commonTips.msgTip16"),"toast-top-center")
+            that.controlDiabled();
+            return ; 
+        } 
+        if(parseInt(that.lockSubscribe) >parseInt(that.HRGBalance)){
+          that.controlDiabled();
+          utils.toastMsgError(that.$t("common.commonTips.msgTip4"),that.$t("common.commonTips.msgTip17"),"toast-top-center")
+          return ; 
+        }  
+        //判断是0x开头
+        if(!str1.toLowerCase().match(/^0x/)){ 
+          that.controlDiabled();
+          utils.toastMsgError(that.$t("common.commonTips.msgTip5"),that.$t("common.commonTips.msgTip19"),"toast-top-center")
+          return ;
+        } 
+      //0x后面40个长度的16进制
+        if(!/^[A-Fa-f0-9]{40}$/.test(str1.substring(2))){
+          that.controlDiabled();
+          utils.toastMsgError(that.$t("common.commonTips.msgTip5"),that.$t("common.commonTips.msgTip19"),"toast-top-center")
+          return ;
+        }
+        if(!that.subscribeCommand){
+          that.controlDiabled();
+          utils.toastMsgError(that.$t("common.commonTips.msgTip5"),that.$t("common.commonTips.msgTip21"),"toast-top-center")
+          return ;
+        } 
+        let tx = await  erc20Signed.approve(oracleaddr,  that.lockSubscribeCount);        
+        //等待approve完成
+        utils.toastShowWait(that.$t("common.commonTips.msgTip4"), that.$t("common.commonTips.msgTip10"), "toast-top-center");
+        await tx.wait();
+        console.log('tx--------->',tx);
+        utils.toastClear();  
+        //确认按钮可用
+        that.btnDisabled =false;
+ 
+      }catch(e){
+        that.controlDiabled(); 
+        utils.toastClear();
+        utils.toastMsgError(that.$t("common.commonTips.msgTip5"),that.$t("common.commonTips.msgTip9") + "," + 
+            e.code + "," + e.message, "toast-top-center"); 
+        console.log('-------',e) 
+      } 
+    },
+    //订阅随机数
+    handlerSubscribe(){
+      const that = this;
+      //口令hash
+      const commandSha3 = that.$web3.utils.sha3(that.subscribeCommand); 
+      //发送请求
+      oracleAbiContract.methods.requestRandom(that.accountAddress,that.userAddress,commandSha3).send({from:that.accountAddress})
+      .on('transactionHash', function(hash){
+          utils.toastShowWait(that.$t("common.commonTips.msgTip4"), that.$t("common.commonTips.msgTip10"), "toast-top-center");
+          console.log('--------->transactionHash:',hash)
+      })
+      .on('receipt', function(receipt){ 
+            utils.toastClear();
+          //本地保存数据                     
+          utils.toastMsgSuccess(that.$t("common.commonTips.msgTip4"),that.$t("common.commonTips.msgTip6"), "toast-top-center")
+          $('#subscribeTaskModal').modal('hide');   
+          //重新加载数据...
+          $(that.purchaseTableName).dataTable().fnDestroy();
+          that.btnDisabled =false;
+          that.getSubmitList();  
+      })
+      .on('error', function(error, receipt) { // 如果交易被网络拒绝并带有交易收据，则第二个参数将是交易收据。
+          that.btnDisabled =false;
+          utils.toastMsgError(that.$t("common.commonTips.msgTip4"), that.$t("common.commonTips.msgTip7")+ error.message, "toast-top-center");
+      });
+
+    },
+    //取消购买
     async CanclePurchase(hashSeed,block){
         const that = this 
         const heighBlock = await that.$web3.eth.getBlockNumber();
@@ -216,7 +412,8 @@ export default {
         }
         this.hashSeed = hashSeed;
         $('#addTaskModal').modal('show');
-    },
+    }, 
+    //获取列表
     getConsumeList(){
       const that = this;   
       if (!that.accountAddress) {         
@@ -247,6 +444,7 @@ export default {
           } 
       })
     },
+    //提交取消购买
     handlerSubmit(){
         //参数1： 消费者合约地址参数2： 订阅的commit hash
         //unsubscribeRandom(address, bytes32)
@@ -278,6 +476,36 @@ export default {
           //     } 
           // })
  
+    },
+       //查看随机数
+    async LookRandom(hashSeed){
+      const that = this; 
+      const hashCode =  that.$web3.utils.soliditySha3("\x19Ethereum Signed Message:\n32", hashSeed)
+      try{
+        let signData = localStorage.getItem(hashSeed) ||'';
+        if(!signData){ 
+         signData =  await that.$web3.eth.sign(hashCode, that.accountAddress); 
+        }
+        oracleAbiContract.methods.getRandom(hashSeed,signData).call({from: that.accountAddress}, function(error, result){
+            if(error){
+              localStorage.setItem(hashSeed,'')
+              utils.toastMsgError(that.$t("common.commonTips.msgTip4"),that.$t("common.commonTips.msgTip6") + "," + error.code + "," + error.message, "toast-top-center");
+              console.log(error);
+            }else{
+              localStorage.setItem(hashSeed,signData)
+              that.randomCode = result;
+              $('#randomTaskModal').modal('show');
+            } 
+        }); 
+        
+      }catch(error){
+           utils.toastMsgError(that.$t("common.commonTips.msgTip4"),that.$t("common.commonTips.msgTip6") + "," + error.code + "," + error.message, "toast-top-center");
+      }
+      
+    },
+    //关闭
+    handlerClose(){
+      $('#randomTaskModal').modal('hide');
     }
   },
   watch: {
@@ -373,7 +601,7 @@ export default {
   letter-spacing: 1px; 
 }
 
-#addTaskModal .modal-footer { 
+ .modal-footer { 
   padding-top: 0;
   justify-content:center;
   border-top: 1px solid #191e3a;
@@ -390,7 +618,7 @@ export default {
   padding: 10px 25px; 
 }
 
-#addTaskModal .modal-footer .btn.add-tsk {
+#addTaskModal  .modal-footer .btn.add-tsk {
     background-color: #1b55e2;
     color: #fff;
     font-weight: 600;
@@ -398,7 +626,7 @@ export default {
     padding: 10px 25px; 
 }
 
-#addTaskModal .modal-footer .btn.edit-tsk {
+#addTaskModal  .modal-footer .btn.edit-tsk {
     background-color: #009688;
     color: #fff;
     font-weight: 600;
