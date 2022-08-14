@@ -482,17 +482,13 @@ export default {
       const that = this; 
       const hashCode =  that.$web3.utils.soliditySha3("\x19Ethereum Signed Message:\n32", hashSeed)
       try{
-        let signData = localStorage.getItem(hashSeed) ||'';
-        if(!signData){ 
-         signData =  await that.$web3.eth.sign(hashCode, that.accountAddress); 
-        }
-        oracleAbiContract.methods.getRandom(hashSeed,signData).call({from: that.accountAddress}, function(error, result){
+        oracleAbiContract.methods.getRandom(hashSeed).call({from: that.accountAddress}, function(error, result){
             if(error){
               localStorage.setItem(hashSeed,'')
               utils.toastMsgError(that.$t("common.commonTips.msgTip4"),that.$t("common.commonTips.msgTip6") + "," + error.code + "," + error.message, "toast-top-center");
               console.log(error);
             }else{
-              localStorage.setItem(hashSeed,signData)
+              localStorage.setItem(hashSeed,'')
               that.randomCode = result;
               $('#randomTaskModal').modal('show');
             } 
