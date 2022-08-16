@@ -78,6 +78,31 @@
                 </div>
             </div>
 
+            <!-- 查看种子 -->
+            <div class="modal fade" id="lookSeedTaskModal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+                <div class="modal-dialog modal-dialog-centered  modal-lg" role="document">
+                    <div class="modal-content" >
+                        <div class="modal-body">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x close" data-dismiss="modal"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                            <div class="compose-box">
+                                <div class="compose-content" >
+                                    <h5 class="task-heading">{{$t("mySubmit.hTitle2")}}</h5>     
+                                    <div class="statbox widget box box-shadow"> 
+                                        <div class="form-group mb-4 mt-4"> 
+                                            <input type="text" v-model="revealSeed" class="form-control" disabled="disabled" readonly="readonly">                                           
+                                        </div>  
+                                    </div>   
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">  
+                            <button  class="btn btn-info"   @click="handlerClose" >{{$t("purchase.btnClose")}}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
         </div>
         <Footer></Footer>
     </div>
@@ -107,6 +132,7 @@ export default {
       lockToken:0, //质押数量
       lockTokenCount:0,//未转换位数的质押数量
       isShowGenerate:true,//是否显示自动生成按钮
+      revealSeed:'',
 
     }
   },
@@ -210,14 +236,28 @@ export default {
           { widht: "120px",data: "null",render: function (data, type, full, meta) {
               var btnToSubmit = "btnsubmit" + full.rowNum;
               $(that.mySubmitTableName).undelegate("tbody #" + btnToSubmit, "click");
-              $(that.mySubmitTableName).on("click", "tbody #" + btnToSubmit,
-                function () {
-                    that.submitSeeds(full.Hash,full.EndBlock);
-                }
-              ); 
-              var operator = '<button id='+ btnToSubmit +' class="btn btn-info">'+ that.$t("mySubmit.submitButton") +'</button> ';
-              
-              return operator;
+              if(full.Revealed){
+                  //查看种子
+                  $(that.mySubmitTableName).on("click", "tbody #" + btnToSubmit,
+                    function () {
+                        that.LookSeeds(full.Seed);
+                    }
+                  ); 
+                  var operator = '<button id='+ btnToSubmit +' class="btn btn-info">'+ that.$t("mySubmit.lookButton") +'</button> ';
+                 return operator;
+               
+              }else{
+                 //提交种子
+                  $(that.mySubmitTableName).on("click", "tbody #" + btnToSubmit,
+                    function () {
+                        that.submitSeeds(full.Hash,full.EndBlock);
+                    }
+                  ); 
+                  var operator = '<button id='+ btnToSubmit +' class="btn btn-info">'+ that.$t("mySubmit.submitButton") +'</button> ';
+                  return operator;
+              }
+           
+           
             },
           }
         ],
@@ -228,12 +268,13 @@ export default {
     },
     //产生随机数
     getRamNumber(){
-      var result=this.accountAddress; 
+      let result=this.accountAddress; 
       result += Date.now().toString(16)
       const length = 66- result.length;
       for(var i=0;i<length;i++){    
         result+=Math.floor(Math.random()*16).toString(16);//获取0-15并通过toString转16进制
       }
+      result =  this.$web3.utils.sha3(result)
       return result;
     }, 
     //生成Hash
@@ -277,6 +318,13 @@ export default {
       
 
       $('#addTaskModal').modal('show');
+    },
+    //查看种子
+    LookSeeds(seed){
+      const that = this; 
+      that.revealSeed = seed; 
+      debugger
+      $('#lookSeedTaskModal').modal('show');
     },
     //批准
     async handlerApproval(){ 
@@ -468,7 +516,9 @@ export default {
                   Block:item.block,
                   EndBlock:parseInt(item.block) +parseInt(that.blockMax),
                   Hash:item.commit,
-                  State:item.substatus 
+                  State:item.substatus,
+                  Revealed:item.revealed,
+                  Seed:item.seed
                 }
                 that.mySubmitList.push(obj)
 
@@ -477,7 +527,11 @@ export default {
           } 
       });
 
-    },
+    }, 
+   //关闭
+    handlerClose(){
+      $('#lookSeedTaskModal').modal('hide');
+    }
 
   },
 
