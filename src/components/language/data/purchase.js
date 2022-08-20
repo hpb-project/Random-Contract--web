@@ -3,6 +3,7 @@ const purchase={
         pageName: "我的购买列表",  
         submitButton: "取消购买", 
         randomButton: "查看随机数", 
+        contractbuy: "合约购买", 
         btnApproval: "批准", 
         btnOperator: "确认", 
         btnSubRandom: "订阅随机数", 
@@ -27,6 +28,7 @@ const purchase={
     EN: {  //英文翻译
         pageName: "My Reveale List",         
         submitButton: "Cancel Purchase",   
+        contractbuy: "Contract Buy",   
         randomButton: "Look Random",  
         btnApproval: "Approve",   
         btnScribed: "Submit",     

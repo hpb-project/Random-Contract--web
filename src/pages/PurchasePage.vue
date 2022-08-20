@@ -10,6 +10,8 @@
                               <span style="color: #888ea8;font-size: 0.875rem;">&nbsp;&nbsp;{{showMsgTips}}</span>  
                             </h5>
                             <div class="dropdown  custom-dropdown">  
+                                <a class="btn btn-outline-danger mr-2"  target="_blank" :href="purchaseUrl">{{$t("purchase.contractbuy")}}</a> 
+ 
                                 <button class="btn btn-outline-info " @click="subscribedRandom">{{$t("purchase.btnSubRandom")}}</button> 
                             </div>
                         </div>
@@ -138,6 +140,7 @@ export default {
   components: { Footer },
   data(){
     return {
+      purchaseUrl:'https://remix.ethereum.org/?code=Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVApwcmFnbWEgc29saWRpdHkgXjAuOC4wOwoKaW50ZXJmYWNlIElPcmFjbGUgewogICAgZnVuY3Rpb24gcmVxdWVzdFJhbmRvbShhZGRyZXNzLGFkZHJlc3MsYnl0ZXMzMikgZXh0ZXJuYWwgcmV0dXJucyAoYm9vbCk7CiAgICBmdW5jdGlvbiBnZXRSYW5kb20oYnl0ZXMzMikgZXh0ZXJuYWwgdmlldyByZXR1cm5zIChieXRlczMyKTsKfQoKaW50ZXJmYWNlIElFUkMyMCB7CiAgICBmdW5jdGlvbiBkZWNpbWFscygpIGV4dGVybmFsIHZpZXcgcmV0dXJucyAodWludDgpOwogICAgZnVuY3Rpb24gdG90YWxTdXBwbHkoKSBleHRlcm5hbCB2aWV3IHJldHVybnMgKHVpbnQyNTYpOwogICAgZnVuY3Rpb24gYmFsYW5jZU9mKGFkZHJlc3MgYWNjb3VudCkgZXh0ZXJuYWwgdmlldyByZXR1cm5zICh1aW50MjU2KTsKICAgIGZ1bmN0aW9uIHRyYW5zZmVyKGFkZHJlc3MgdG8sIHVpbnQyNTYgYW1vdW50KSBleHRlcm5hbCByZXR1cm5zIChib29sKTsKICAgIGZ1bmN0aW9uIGFsbG93YW5jZShhZGRyZXNzIG93bmVyLCBhZGRyZXNzIHNwZW5kZXIpIGV4dGVybmFsIHZpZXcgcmV0dXJucyAodWludDI1Nik7CiAgICBmdW5jdGlvbiBhcHByb3ZlKGFkZHJlc3Mgc3BlbmRlciwgdWludDI1NiBhbW91bnQpIGV4dGVybmFsIHJldHVybnMgKGJvb2wpOwogICAgZnVuY3Rpb24gdHJhbnNmZXJGcm9tKGFkZHJlc3MgZnJvbSwgYWRkcmVzcyB0bywgdWludDI1NiBhbW91bnQpIGV4dGVybmFsIHJldHVybnMgKGJvb2wpOwp9Cgpjb250cmFjdCBDb21zdW1lckV4YW1wbGUgewogICAgYWRkcmVzcyBwcml2YXRlIF9vd25lcjsKICAgIG1vZGlmaWVyIG9ubHlPd25lcigpIHsKICAgICAgICByZXF1aXJlKF9vd25lciA9PSBtc2cuc2VuZGVyLCAiT3duYWJsZTogY2FsbGVyIGlzIG5vdCB0aGUgb3duZXIiKTsKICAgICAgICBfOwogICAgfQoKICAgIElPcmFjbGUgb3JhY2xlID0gSU9yYWNsZSgweDAzMDFFMGE1NWU0M2NDMzg3NjJiY2Y2YUM0Qzg2RjVGMTRCNDM2RjEpOyAvLyBvcmFjbGUgY29udHJhY3QgYWRkcmVzcwogICAgSUVSQzIwIHRva2VuID0gSUVSQzIwKDB4RDU2OTdmYTkzYjIxQzEyODUyYzYwNWM1YjljMzQ5NTg1ODQzNjQyZSk7ICAvLyBocmcgdG9rZW4gY29udHJhY3QgYWRkcmVzcwoKICAgIGNvbnN0cnVjdG9yKCkgewogICAgICAgICAgICBfb3duZXIgPSBtc2cuc2VuZGVyOwogICAgfQoKICAgIGZ1bmN0aW9uIHNldHRpbmcoYWRkcmVzcyBvcmFjbGVBZGRyLCBhZGRyZXNzIHRva2VuQWRkcikgcHVibGljIG9ubHlPd25lciB7CiAgICAgICAgb3JhY2xlID0gSU9yYWNsZShvcmFjbGVBZGRyKTsKICAgICAgICB0b2tlbiA9IElFUkMyMCh0b2tlbkFkZHIpOwogICAgfQogICAgCiAgICBieXRlczMyIF9yYW5kb207CiAgICBhZGRyZXNzIFtdIHBsYXllcnM7CiAgICBhZGRyZXNzIHdpbmVyOwoKICAgIC8vIGFwcHJvdmUgdG9rZW4gdG8gb3JhY2xlLgogICAgZnVuY3Rpb24gYXBwcm92ZVRva2VuKHVpbnQyNTYgYW1vdW50KSBwdWJsaWMgb25seU93bmVyIHsKICAgICAgICB1aW50OCBkZWMgPSB0b2tlbi5kZWNpbWFscygpOwogICAgICAgIHVpbnQyNTYgdG93ZWkgPSBhbW91bnQgKiAxMCAqKiBkZWM7CiAgICAgICAgcmVxdWlyZSh0b2tlbi5iYWxhbmNlT2YoYWRkcmVzcyh0aGlzKSkgPj0gdG93ZWksICJub3QgZW5vdWdoIHRva2VuIik7CiAgICAgICAgdG9rZW4uYXBwcm92ZShhZGRyZXNzKG9yYWNsZSksIHRvd2VpKTsKICAgIH0KICAgIAogICAgLy8gcmVxdWVzdCBhIHJhbmRvbS4KICAgIGZ1bmN0aW9uIHN0YXJ0TmV3R2FtZSgpIHB1YmxpYyBvbmx5T3duZXIgewogICAgICAgIGJ5dGVzMzIgcmluZ2hhc2ggPSBrZWNjYWsyNTYoYnl0ZXMoInNvbWV0aGluZyIpKTsKICAgICAgICBvcmFjbGUucmVxdWVzdFJhbmRvbShtc2cuc2VuZGVyLCBhZGRyZXNzKHRoaXMpLCByaW5naGFzaCk7CiAgICB9CgogICAgZnVuY3Rpb24gam9pbkdhbWUoKSBwdWJsaWMgewogICAgICAgIHBsYXllcnMucHVzaChtc2cuc2VuZGVyKTsKICAgIH0KCiAgICBmdW5jdGlvbiBlbmRHYW1lKGJ5dGVzMzIgY29tbWl0KSBwdWJsaWMgb25seU93bmVyIHsKICAgICAgICBfcmFuZG9tID0gb3JhY2xlLmdldFJhbmRvbShjb21taXQpOwogICAgICAgIHVpbnQyNTYgX25yYW5kb20gPSB1aW50MjU2KF9yYW5kb20pOwogICAgCiAgICAgICAgcmVxdWlyZShfbnJhbmRvbSAhPSAwLCAibm90IGdvdCByYW5kb20iKTsKICAgICAgICByZXF1aXJlKHBsYXllcnMubGVuZ3RoID4gMCwgImhhdmUgbm8gcGxheWVycyIpOwogICAgICAgIHVpbnQzMiB3aW5lcmlkeCA9IHVpbnQzMihfbnJhbmRvbSUgcGxheWVycy5sZW5ndGgpOwogICAgICAgIHdpbmVyID0gcGxheWVyc1t3aW5lcmlkeF07CgogICAgfQogICAgZnVuY3Rpb24gZ2V0cmFuZG9tKCkgcHVibGljIHZpZXcgb25seU93bmVyIHJldHVybnMgKGJ5dGVzMzIpIHsKICAgICAgICByZXR1cm4gX3JhbmRvbTsKICAgIH0KfQ==',
       accountAddress:'', 
       hashSeed:'',
       table: null,
@@ -237,12 +240,15 @@ export default {
                   "......" +
                   data.substring(data.length - 10);
               }
-              let html =
-                '<span  class="btn-link text-warning" title="' +
-                data +
-                '" >' +
-                displayText +
-                "</span>";
+              var spanTitle = "span" + data;
+               $(that.purchaseTableName).undelegate("tbody #" + spanTitle, "click");
+                $(that.purchaseTableName).on("click", "tbody #" + spanTitle,
+                    function () {
+                        that.copyHash(data);
+                    }
+                ); 
+
+              let html =`<span id=${spanTitle} class="btn-link text-warning" title="${data}" >${displayText}  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"  class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path> <polyline points="13 2 13 9 20 9"></polyline></svg> </span>`;
               return html;
             },
           }, 
@@ -296,6 +302,12 @@ export default {
         oLanguage: that.tableLanguage,
       });
     },
+        // 复制成功
+    copyHash(hash){   
+      this.$copyText(hash);
+      utils.toastMsgSuccess(this.$t("common.navHeader.msgTip1"),this.$t("common.navHeader.msgTip2"),"toast-top-center")
+    },
+     
     //显示订阅随机数页面
     subscribedRandom(){
       const that = this ;
