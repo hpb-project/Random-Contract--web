@@ -1,11 +1,11 @@
 {
     "setting":{
-        "configaddr":"0x723d0c427885AB997d249E5DB8F19E4ee94FA2D1",
-        "oracleaddr":"0xf2FfB77d5fd72eBa74416Df747DD5CD3E0C9Bd36", 
-        "tokenaddr":"0xc212057F863FB3633EdDf4a2fc1AdFc2bF5424E0", 
-        "storeageaddr":"0x36E1de7BDA9d7664eeBBCf2Eb693BDb898Ba932B",
-        "statsaddr":"0x9a418c9BcF64102a1345d085B026f2d59161F2bd",
-        "commiteraddr":"0x0cEF7485b06D26b206F0bA623da0b665677A45F7",
+        "configaddr":"0xea8DE2853087D7425c669Dd1A37CEf8cC35710Ea",
+        "oracleaddr":"0x386A2258AdFa29241863f3B7B55f9116cA7B22f6", 
+        "tokenaddr":"0xF02F2575CfB182064477879165A684b895849f2D", 
+        "storeageaddr":"0x4E01AD10d450A4ccbae1C6b3dEEb8B835534e688",
+        "statsaddr":"0x6A4EdC699726606338eC1b575C1578b5842F4D5a",
+        "commiteraddr":"0x2d0B1e8fb15E604E5be624284Fcd457b7e2d09df",
         "blockRange":200
     },
     "configabi":  [
@@ -700,7 +700,13 @@
       "type": "function"
     },
     {
-      "inputs": [],
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        }
+      ],
       "name": "getUserSubscribed",
       "outputs": [
         {
