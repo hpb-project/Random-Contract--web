@@ -1,951 +1,1005 @@
 {
     "setting":{
-        "configaddr":"0x9A6A513d36903FBB7D5091fFD628E7831c726822",
-        "oracleaddr":"0xC64a38A3F84ec773F0c8F33C190FeB850F2b52d2", 
-        "tokenaddr":"0xecd36A108570F04cb2175d3D52A9653BA90557fc", 
-        "storeageaddr":"0x89feB09786EB6B1861229EF12bb720C5928C566D",
-        "statsaddr":"0xAA7dD9820bB929dF883376C14E2E25CE44f139A1",
-        "commiteraddr":"0xcBeA23e62e3Eaa40312d8aB7fC7Cfb9353C0b343",
+        "configaddr":"0x723d0c427885AB997d249E5DB8F19E4ee94FA2D1",
+        "oracleaddr":"0xf2FfB77d5fd72eBa74416Df747DD5CD3E0C9Bd36", 
+        "tokenaddr":"0xc212057F863FB3633EdDf4a2fc1AdFc2bF5424E0", 
+        "storeageaddr":"0x36E1de7BDA9d7664eeBBCf2Eb693BDb898Ba932B",
+        "statsaddr":"0x9a418c9BcF64102a1345d085B026f2d59161F2bd",
+        "commiteraddr":"0x0cEF7485b06D26b206F0bA623da0b665677A45F7",
         "blockRange":200
     },
     "configabi":  [
-      {
-        "inputs": [],
-        "stateMutability": "nonpayable",
-        "type": "constructor"
-      },
-      {
-        "anonymous": false,
-        "inputs": [
-          {
-            "indexed": true,
-            "internalType": "address",
-            "name": "previousOwner",
-            "type": "address"
-          },
-          {
-            "indexed": true,
-            "internalType": "address",
-            "name": "newOwner",
-            "type": "address"
-          }
-        ],
-        "name": "OwnershipTransferred",
-        "type": "event"
-      },
-      {
-        "inputs": [
-          {
-            "internalType": "address",
-            "name": "_admin",
-            "type": "address"
-          }
-        ],
-        "name": "addAdmin",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-      },
-      {
-        "inputs": [],
-        "name": "getDepositAmount",
-        "outputs": [
-          {
-            "internalType": "uint256",
-            "name": "",
-            "type": "uint256"
-          }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "inputs": [],
-        "name": "getFee",
-        "outputs": [
-          {
-            "internalType": "uint256",
-            "name": "",
-            "type": "uint256"
-          }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "inputs": [],
-        "name": "getMaxUnverify",
-        "outputs": [
-          {
-            "internalType": "uint256",
-            "name": "",
-            "type": "uint256"
-          }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "inputs": [],
-        "name": "getMaxVerifyBlocks",
-        "outputs": [
-          {
-            "internalType": "uint256",
-            "name": "",
-            "type": "uint256"
-          }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "inputs": [],
-        "name": "getMinVerifyBlocks",
-        "outputs": [
-          {
-            "internalType": "uint256",
-            "name": "",
-            "type": "uint256"
-          }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "inputs": [],
-        "name": "getUnSubBlocks",
-        "outputs": [
-          {
-            "internalType": "uint256",
-            "name": "",
-            "type": "uint256"
-          }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "inputs": [],
-        "name": "owner",
-        "outputs": [
-          {
-            "internalType": "address",
-            "name": "",
-            "type": "address"
-          }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "inputs": [
-          {
-            "internalType": "address",
-            "name": "_admin",
-            "type": "address"
-          }
-        ],
-        "name": "removeAdmin",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-      },
-      {
-        "inputs": [],
-        "name": "renounceOwnership",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-      },
-      {
-        "inputs": [
-          {
-            "internalType": "uint256",
-            "name": "amount",
-            "type": "uint256"
-          }
-        ],
-        "name": "setDepositAmount",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-      },
-      {
-        "inputs": [
-          {
-            "internalType": "uint256",
-            "name": "newfee",
-            "type": "uint256"
-          }
-        ],
-        "name": "setFee",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-      },
-      {
-        "inputs": [
-          {
-            "internalType": "uint256",
-            "name": "max_unverify",
-            "type": "uint256"
-          }
-        ],
-        "name": "setMaxUnverify",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-      },
-      {
-        "inputs": [
-          {
-            "internalType": "uint256",
-            "name": "blocks",
-            "type": "uint256"
-          }
-        ],
-        "name": "setMaxVerifyBlocks",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-      },
-      {
-        "inputs": [
-          {
-            "internalType": "uint256",
-            "name": "blocks",
-            "type": "uint256"
-          }
-        ],
-        "name": "setMinVerifyBlocks",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-      },
-      {
-        "inputs": [
-          {
-            "internalType": "uint256",
-            "name": "blocks",
-            "type": "uint256"
-          }
-        ],
-        "name": "setUnSubBlocks",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-      },
-      {
-        "inputs": [
-          {
-            "internalType": "address",
-            "name": "newOwner",
-            "type": "address"
-          }
-        ],
-        "name": "transferOwnership",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-      }
-    ],
+    {
+      "inputs": [],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "previousOwner",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "OwnershipTransferred",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "old",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "newaddr",
+          "type": "address"
+        }
+      ],
+      "name": "updateoracle",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_admin",
+          "type": "address"
+        }
+      ],
+      "name": "addAdmin",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getDepositAmount",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getFee",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getMaxUnverify",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getMaxVerifyBlocks",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getMinVerifyBlocks",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getOracle",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getUnSubBlocks",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "owner",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_admin",
+          "type": "address"
+        }
+      ],
+      "name": "removeAdmin",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "renounceOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "setDepositAmount",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "newfee",
+          "type": "uint256"
+        }
+      ],
+      "name": "setFee",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "max_unverify",
+          "type": "uint256"
+        }
+      ],
+      "name": "setMaxUnverify",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "blocks",
+          "type": "uint256"
+        }
+      ],
+      "name": "setMaxVerifyBlocks",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "blocks",
+          "type": "uint256"
+        }
+      ],
+      "name": "setMinVerifyBlocks",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "neworacle",
+          "type": "address"
+        }
+      ],
+      "name": "setOracle",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "blocks",
+          "type": "uint256"
+        }
+      ],
+      "name": "setUnSubBlocks",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "transferOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
     "oracleabi":  [
-	    {
-		    "inputs": [],
-		    "stateMutability": "nonpayable",
-		    "type": "constructor"
-	    },
-	    {
-		    "anonymous": false,
-		    "inputs": [
-			    {
-				    "indexed": false,
-				    "internalType": "address",
-				    "name": "sender",
-				    "type": "address"
-			    },
-			    {
-				    "indexed": false,
-				    "internalType": "bytes32",
-				    "name": "hash",
-				    "type": "bytes32"
-			    },
-			    {
-				    "indexed": false,
-				    "internalType": "uint256",
-				    "name": "block",
-				    "type": "uint256"
-			    },
-			    {
-				    "indexed": false,
-				    "internalType": "uint256",
-				    "name": "time",
-				    "type": "uint256"
-			    }
-		    ],
-		    "name": "CommitHash",
-		    "type": "event"
-	    },
-	    {
-		    "anonymous": false,
-		    "inputs": [
-			    {
-				    "indexed": true,
-				    "internalType": "address",
-				    "name": "previousOwner",
-				    "type": "address"
-			    },
-			    {
-				    "indexed": true,
-				    "internalType": "address",
-				    "name": "newOwner",
-				    "type": "address"
-			    }
-		    ],
-		    "name": "OwnershipTransferred",
-		    "type": "event"
-	    },
-	    {
-		    "anonymous": false,
-		    "inputs": [
-			    {
-				    "indexed": false,
-				    "internalType": "address",
-				    "name": "commiter",
-				    "type": "address"
-			    },
-			    {
-				    "indexed": false,
-				    "internalType": "address",
-				    "name": "consumer",
-				    "type": "address"
-			    },
-			    {
-				    "indexed": false,
-				    "internalType": "bytes32",
-				    "name": "hash",
-				    "type": "bytes32"
-			    },
-			    {
-				    "indexed": false,
-				    "internalType": "uint256",
-				    "name": "block",
-				    "type": "uint256"
-			    },
-			    {
-				    "indexed": false,
-				    "internalType": "uint256",
-				    "name": "time",
-				    "type": "uint256"
-			    }
-		    ],
-		    "name": "RandomConsumed",
-		    "type": "event"
-	    },
-	    {
-		    "anonymous": false,
-		    "inputs": [
-			    {
-				    "indexed": false,
-				    "internalType": "address",
-				    "name": "commiter",
-				    "type": "address"
-			    },
-			    {
-				    "indexed": false,
-				    "internalType": "bytes32",
-				    "name": "hash",
-				    "type": "bytes32"
-			    },
-			    {
-				    "indexed": false,
-				    "internalType": "bytes32",
-				    "name": "seed",
-				    "type": "bytes32"
-			    },
-			    {
-				    "indexed": false,
-				    "internalType": "uint256",
-				    "name": "block",
-				    "type": "uint256"
-			    },
-			    {
-				    "indexed": false,
-				    "internalType": "uint256",
-				    "name": "time",
-				    "type": "uint256"
-			    }
-		    ],
-		    "name": "RevealSeed",
-		    "type": "event"
-	    },
-	    {
-		    "anonymous": false,
-		    "inputs": [
-			    {
-				    "indexed": false,
-				    "internalType": "address",
-				    "name": "consumer",
-				    "type": "address"
-			    },
-			    {
-				    "indexed": false,
-				    "internalType": "address",
-				    "name": "commiter",
-				    "type": "address"
-			    },
-			    {
-				    "indexed": false,
-				    "internalType": "bytes32",
-				    "name": "hash",
-				    "type": "bytes32"
-			    },
-			    {
-				    "indexed": false,
-				    "internalType": "uint256",
-				    "name": "block",
-				    "type": "uint256"
-			    },
-			    {
-				    "indexed": false,
-				    "internalType": "uint256",
-				    "name": "time",
-				    "type": "uint256"
-			    }
-		    ],
-		    "name": "Subscribe",
-		    "type": "event"
-	    },
-	    {
-		    "anonymous": false,
-		    "inputs": [
-			    {
-				    "indexed": false,
-				    "internalType": "address",
-				    "name": "consumer",
-				    "type": "address"
-			    },
-			    {
-				    "indexed": false,
-				    "internalType": "address",
-				    "name": "commiter",
-				    "type": "address"
-			    },
-			    {
-				    "indexed": false,
-				    "internalType": "bytes32",
-				    "name": "hash",
-				    "type": "bytes32"
-			    },
-			    {
-				    "indexed": false,
-				    "internalType": "uint256",
-				    "name": "block",
-				    "type": "uint256"
-			    },
-			    {
-				    "indexed": false,
-				    "internalType": "uint256",
-				    "name": "time",
-				    "type": "uint256"
-			    }
-		    ],
-		    "name": "UnSubscribe",
-		    "type": "event"
-	    },
-	    {
-		    "inputs": [
-			    {
-				    "internalType": "address",
-				    "name": "_admin",
-				    "type": "address"
-			    }
-		    ],
-		    "name": "addAdmin",
-		    "outputs": [],
-		    "stateMutability": "nonpayable",
-		    "type": "function"
-	    },
-	    {
-		    "inputs": [
-			    {
-				    "internalType": "bytes32",
-				    "name": "hash",
-				    "type": "bytes32"
-			    }
-		    ],
-		    "name": "commit",
-		    "outputs": [],
-		    "stateMutability": "nonpayable",
-		    "type": "function"
-	    },
-	    {
-		    "inputs": [
-			    {
-				    "internalType": "address",
-				    "name": "commiter",
-				    "type": "address"
-			    }
-		    ],
-		    "name": "getCommiterValidCount",
-		    "outputs": [
-			    {
-				    "internalType": "uint256",
-				    "name": "",
-				    "type": "uint256"
-			    }
-		    ],
-		    "stateMutability": "view",
-		    "type": "function"
-	    },
-	    {
-		    "inputs": [
-			    {
-				    "internalType": "address",
-				    "name": "consumer",
-				    "type": "address"
-			    }
-		    ],
-		    "name": "getConsumerConsumedCount",
-		    "outputs": [
-			    {
-				    "internalType": "uint256",
-				    "name": "",
-				    "type": "uint256"
-			    }
-		    ],
-		    "stateMutability": "view",
-		    "type": "function"
-	    },
-	    {
-		    "inputs": [
-			    {
-				    "internalType": "bytes32",
-				    "name": "seed",
-				    "type": "bytes32"
-			    }
-		    ],
-		    "name": "getHash",
-		    "outputs": [
-			    {
-				    "internalType": "bytes32",
-				    "name": "",
-				    "type": "bytes32"
-			    }
-		    ],
-		    "stateMutability": "view",
-		    "type": "function"
-	    },
-	    {
-		    "inputs": [
-			    {
-				    "internalType": "bytes32",
-				    "name": "commit",
-				    "type": "bytes32"
-			    }
-		    ],
-		    "name": "getRandom",
-		    "outputs": [
-			    {
-				    "internalType": "bytes32",
-				    "name": "",
-				    "type": "bytes32"
-			    }
-		    ],
-		    "stateMutability": "view",
-		    "type": "function"
-	    },
-	    {
-		    "inputs": [],
-		    "name": "getTotalStat",
-		    "outputs": [
-			    {
-				    "internalType": "uint256",
-				    "name": "",
-				    "type": "uint256"
-			    },
-			    {
-				    "internalType": "uint256",
-				    "name": "",
-				    "type": "uint256"
-			    },
-			    {
-				    "internalType": "uint256",
-				    "name": "",
-				    "type": "uint256"
-			    }
-		    ],
-		    "stateMutability": "view",
-		    "type": "function"
-	    },
-	    {
-		    "inputs": [
-			    {
-				    "internalType": "address",
-				    "name": "commiter",
-				    "type": "address"
-			    }
-		    ],
-		    "name": "getUserCommitsList",
-		    "outputs": [
-			    {
-				    "components": [
-					    {
-						    "internalType": "address",
-						    "name": "author",
-						    "type": "address"
-					    },
-					    {
-						    "internalType": "bytes32",
-						    "name": "commit",
-						    "type": "bytes32"
-					    },
-					    {
-						    "internalType": "uint256",
-						    "name": "block",
-						    "type": "uint256"
-					    },
-					    {
-						    "internalType": "bytes32",
-						    "name": "seed",
-						    "type": "bytes32"
-					    },
-					    {
-						    "internalType": "bool",
-						    "name": "revealed",
-						    "type": "bool"
-					    },
-					    {
-						    "internalType": "uint256",
-						    "name": "verifiedBlock",
-						    "type": "uint256"
-					    },
-					    {
-						    "internalType": "address",
-						    "name": "consumer",
-						    "type": "address"
-					    },
-					    {
-						    "internalType": "address",
-						    "name": "subsender",
-						    "type": "address"
-					    },
-					    {
-						    "internalType": "uint256",
-						    "name": "subBlock",
-						    "type": "uint256"
-					    },
-					    {
-						    "internalType": "uint8",
-						    "name": "substatus",
-						    "type": "uint8"
-					    }
-				    ],
-				    "internalType": "struct Commit[]",
-				    "name": "",
-				    "type": "tuple[]"
-			    }
-		    ],
-		    "stateMutability": "view",
-		    "type": "function"
-	    },
-	    {
-		    "inputs": [
-			    {
-				    "internalType": "address",
-				    "name": "consumer",
-				    "type": "address"
-			    }
-		    ],
-		    "name": "getUserSubscribed",
-		    "outputs": [
-			    {
-				    "components": [
-					    {
-						    "internalType": "address",
-						    "name": "author",
-						    "type": "address"
-					    },
-					    {
-						    "internalType": "bytes32",
-						    "name": "commit",
-						    "type": "bytes32"
-					    },
-					    {
-						    "internalType": "uint256",
-						    "name": "block",
-						    "type": "uint256"
-					    },
-					    {
-						    "internalType": "bytes32",
-						    "name": "seed",
-						    "type": "bytes32"
-					    },
-					    {
-						    "internalType": "bool",
-						    "name": "revealed",
-						    "type": "bool"
-					    },
-					    {
-						    "internalType": "uint256",
-						    "name": "verifiedBlock",
-						    "type": "uint256"
-					    },
-					    {
-						    "internalType": "address",
-						    "name": "consumer",
-						    "type": "address"
-					    },
-					    {
-						    "internalType": "address",
-						    "name": "subsender",
-						    "type": "address"
-					    },
-					    {
-						    "internalType": "uint256",
-						    "name": "subBlock",
-						    "type": "uint256"
-					    },
-					    {
-						    "internalType": "uint8",
-						    "name": "substatus",
-						    "type": "uint8"
-					    }
-				    ],
-				    "internalType": "struct Commit[]",
-				    "name": "",
-				    "type": "tuple[]"
-			    }
-		    ],
-		    "stateMutability": "view",
-		    "type": "function"
-	    },
-	    {
-		    "inputs": [
-			    {
-				    "internalType": "address",
-				    "name": "commiter",
-				    "type": "address"
-			    }
-		    ],
-		    "name": "getUserUnverifiedList",
-		    "outputs": [
-			    {
-				    "components": [
-					    {
-						    "internalType": "address",
-						    "name": "author",
-						    "type": "address"
-					    },
-					    {
-						    "internalType": "bytes32",
-						    "name": "commit",
-						    "type": "bytes32"
-					    },
-					    {
-						    "internalType": "uint256",
-						    "name": "block",
-						    "type": "uint256"
-					    },
-					    {
-						    "internalType": "bytes32",
-						    "name": "seed",
-						    "type": "bytes32"
-					    },
-					    {
-						    "internalType": "bool",
-						    "name": "revealed",
-						    "type": "bool"
-					    },
-					    {
-						    "internalType": "uint256",
-						    "name": "verifiedBlock",
-						    "type": "uint256"
-					    },
-					    {
-						    "internalType": "address",
-						    "name": "consumer",
-						    "type": "address"
-					    },
-					    {
-						    "internalType": "address",
-						    "name": "subsender",
-						    "type": "address"
-					    },
-					    {
-						    "internalType": "uint256",
-						    "name": "subBlock",
-						    "type": "uint256"
-					    },
-					    {
-						    "internalType": "uint8",
-						    "name": "substatus",
-						    "type": "uint8"
-					    }
-				    ],
-				    "internalType": "struct Commit[]",
-				    "name": "",
-				    "type": "tuple[]"
-			    }
-		    ],
-		    "stateMutability": "view",
-		    "type": "function"
-	    },
-	    {
-		    "inputs": [],
-		    "name": "owner",
-		    "outputs": [
-			    {
-				    "internalType": "address",
-				    "name": "",
-				    "type": "address"
-			    }
-		    ],
-		    "stateMutability": "view",
-		    "type": "function"
-	    },
-	    {
-		    "inputs": [
-			    {
-				    "internalType": "address",
-				    "name": "_admin",
-				    "type": "address"
-			    }
-		    ],
-		    "name": "removeAdmin",
-		    "outputs": [],
-		    "stateMutability": "nonpayable",
-		    "type": "function"
-	    },
-	    {
-		    "inputs": [],
-		    "name": "renounceOwnership",
-		    "outputs": [],
-		    "stateMutability": "nonpayable",
-		    "type": "function"
-	    },
-	    {
-		    "inputs": [
-			    {
-				    "internalType": "address",
-				    "name": "user",
-				    "type": "address"
-			    },
-			    {
-				    "internalType": "address",
-				    "name": "consumer",
-				    "type": "address"
-			    },
-			    {
-				    "internalType": "bytes32",
-				    "name": "token",
-				    "type": "bytes32"
-			    }
-		    ],
-		    "name": "requestRandom",
-		    "outputs": [
-			    {
-				    "internalType": "bool",
-				    "name": "",
-				    "type": "bool"
-			    }
-		    ],
-		    "stateMutability": "nonpayable",
-		    "type": "function"
-	    },
-	    {
-		    "inputs": [
-			    {
-				    "internalType": "bytes32",
-				    "name": "hash",
-				    "type": "bytes32"
-			    },
-			    {
-				    "internalType": "bytes32",
-				    "name": "seed",
-				    "type": "bytes32"
-			    }
-		    ],
-		    "name": "reveal",
-		    "outputs": [],
-		    "stateMutability": "nonpayable",
-		    "type": "function"
-	    },
-	    {
-		    "inputs": [
-			    {
-				    "internalType": "address",
-				    "name": "_token",
-				    "type": "address"
-			    },
-			    {
-				    "internalType": "address",
-				    "name": "_config",
-				    "type": "address"
-			    },
-			    {
-				    "internalType": "address",
-				    "name": "_deposit",
-				    "type": "address"
-			    },
-			    {
-				    "internalType": "address",
-				    "name": "_store",
-				    "type": "address"
-			    },
-			    {
-				    "internalType": "address",
-				    "name": "_commitReveal",
-				    "type": "address"
-			    },
-			    {
-				    "internalType": "address",
-				    "name": "_stat",
-				    "type": "address"
-			    },
-			    {
-				    "internalType": "address",
-				    "name": "_internalstore",
-				    "type": "address"
-			    }
-		    ],
-		    "name": "setting",
-		    "outputs": [],
-		    "stateMutability": "nonpayable",
-		    "type": "function"
-	    },
-	    {
-		    "inputs": [
-			    {
-				    "internalType": "address",
-				    "name": "newOwner",
-				    "type": "address"
-			    }
-		    ],
-		    "name": "transferOwnership",
-		    "outputs": [],
-		    "stateMutability": "nonpayable",
-		    "type": "function"
-	    },
-	    {
-		    "inputs": [
-			    {
-				    "internalType": "address",
-				    "name": "consumer",
-				    "type": "address"
-			    },
-			    {
-				    "internalType": "bytes32",
-				    "name": "hash",
-				    "type": "bytes32"
-			    }
-		    ],
-		    "name": "unsubscribeRandom",
-		    "outputs": [],
-		    "stateMutability": "nonpayable",
-		    "type": "function"
-	    }
-    ],
+    {
+      "inputs": [],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "sender",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "bytes32",
+          "name": "hash",
+          "type": "bytes32"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "block",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "time",
+          "type": "uint256"
+        }
+      ],
+      "name": "CommitHash",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "previousOwner",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "OwnershipTransferred",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "commiter",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "consumer",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "bytes32",
+          "name": "hash",
+          "type": "bytes32"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "block",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "time",
+          "type": "uint256"
+        }
+      ],
+      "name": "RandomConsumed",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "commiter",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "bytes32",
+          "name": "hash",
+          "type": "bytes32"
+        },
+        {
+          "indexed": false,
+          "internalType": "bytes32",
+          "name": "seed",
+          "type": "bytes32"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "block",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "time",
+          "type": "uint256"
+        }
+      ],
+      "name": "RevealSeed",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "consumer",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "commiter",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "bytes32",
+          "name": "hash",
+          "type": "bytes32"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "block",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "time",
+          "type": "uint256"
+        }
+      ],
+      "name": "Subscribe",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "consumer",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "commiter",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "bytes32",
+          "name": "hash",
+          "type": "bytes32"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "block",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "time",
+          "type": "uint256"
+        }
+      ],
+      "name": "UnSubscribe",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_admin",
+          "type": "address"
+        }
+      ],
+      "name": "addAdmin",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "hash",
+          "type": "bytes32"
+        }
+      ],
+      "name": "commit",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "commiter",
+          "type": "address"
+        }
+      ],
+      "name": "getCommiterValidCount",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "consumer",
+          "type": "address"
+        }
+      ],
+      "name": "getConsumerConsumedCount",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "seed",
+          "type": "bytes32"
+        }
+      ],
+      "name": "getHash",
+      "outputs": [
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "commit",
+          "type": "bytes32"
+        }
+      ],
+      "name": "getRandom",
+      "outputs": [
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getTotalStat",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "commiter",
+          "type": "address"
+        }
+      ],
+      "name": "getUserCommitsList",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "address",
+              "name": "author",
+              "type": "address"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "commit",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "uint256",
+              "name": "block",
+              "type": "uint256"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "hrandom",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "seed",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "bool",
+              "name": "revealed",
+              "type": "bool"
+            },
+            {
+              "internalType": "uint256",
+              "name": "verifiedBlock",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "consumer",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "subsender",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "subBlock",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint8",
+              "name": "substatus",
+              "type": "uint8"
+            }
+          ],
+          "internalType": "struct Commit[]",
+          "name": "",
+          "type": "tuple[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getUserSubscribed",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "address",
+              "name": "author",
+              "type": "address"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "commit",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "uint256",
+              "name": "block",
+              "type": "uint256"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "hrandom",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "seed",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "bool",
+              "name": "revealed",
+              "type": "bool"
+            },
+            {
+              "internalType": "uint256",
+              "name": "verifiedBlock",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "consumer",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "subsender",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "subBlock",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint8",
+              "name": "substatus",
+              "type": "uint8"
+            }
+          ],
+          "internalType": "struct Commit[]",
+          "name": "",
+          "type": "tuple[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "commiter",
+          "type": "address"
+        }
+      ],
+      "name": "getUserUnverifiedList",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "address",
+              "name": "author",
+              "type": "address"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "commit",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "uint256",
+              "name": "block",
+              "type": "uint256"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "hrandom",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "seed",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "bool",
+              "name": "revealed",
+              "type": "bool"
+            },
+            {
+              "internalType": "uint256",
+              "name": "verifiedBlock",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "consumer",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "subsender",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "subBlock",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint8",
+              "name": "substatus",
+              "type": "uint8"
+            }
+          ],
+          "internalType": "struct Commit[]",
+          "name": "",
+          "type": "tuple[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "owner",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_admin",
+          "type": "address"
+        }
+      ],
+      "name": "removeAdmin",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "renounceOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "consumer",
+          "type": "address"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "token",
+          "type": "bytes32"
+        }
+      ],
+      "name": "requestRandom",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "hash",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "seed",
+          "type": "bytes32"
+        }
+      ],
+      "name": "reveal",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_token",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_config",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_deposit",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_store",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_commitReveal",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_stat",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_internalstore",
+          "type": "address"
+        }
+      ],
+      "name": "setting",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "transferOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "consumer",
+          "type": "address"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "hash",
+          "type": "bytes32"
+        }
+      ],
+      "name": "unsubscribeRandom",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
     "erc20abi":[
       {
         "constant": true,
