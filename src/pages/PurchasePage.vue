@@ -434,7 +434,7 @@ export default {
       }  
       //账户地址
       // utils.toastShowWait(that.$t("common.commonTips.msgTip4"), that.$t("common.commonTips.msgTip12"), "toast-top-center");
-      oracleAbiContract.methods.getUserSubscribed(that.accountAddress).call(null,function(error,result){
+      oracleAbiContract.methods.getUserSubscribed().call(null,function(error,result){
           // utils.toastClear();
           if(error !=null){
             utils.toastMsgError(that.$t("common.commonTips.msgTip5"), that.$t("common.commonTips.msgTip7")+ error.message, "toast-top-center");
