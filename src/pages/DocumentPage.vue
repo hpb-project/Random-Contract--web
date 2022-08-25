@@ -275,187 +275,96 @@
                      <div  v-else class="privacy-content-container">
                         <section>
                             <h5>HRG (HPB Random Generator)</h5>
-                            <p class="text2em">HRG (HPB Random Generator) 是基于智能合约实现的一个可证明公平和可验证的随机数生成器，智能合约能够访问随机值，而不损害安全性和可用性。对于每个请求，HRG 会反馈一个随机数，在消费合约使用它之前，可以进行随机数值的验证，确保不会被Oracle系统以及任何提交者篡改或操纵。</p>
+                            <p class="text2em">HRG (HPB Random Generator) 是基于智能合约实现的一个可证明公平和可验证的随机数生成器，使智能合约能够访问随机值，而不损害安全性和可用性。对于每个请求，HRG 会反馈一个随机数，在消费合约使用它之前，可以进行随机数值的验证，确保不会被Oracle系统以及任何提交者篡改或操纵。</p>
                         </section>  
                         <section> 
                             <h5>随机数生成原理</h5> 
-                            <p  class="text2em">HRG 系统中有两个角色，提交者-随机数的制造者；消费者-随机数的使用者。HRG系统的随机数由提交者分两次提交产生。</p>
+                            <p  class="text2em">HRG 系统中有三个角色：</p>
+                            <ul class="ml-2">
+                                <li class="text-center">
+                                   <p class="text-left">提交者：随机数的生产者，分两个阶段完成一个随机数种子的生成；</p> 
+                                </li> 
+                                <li class="text-center">
+                                   <p class="text-left">消费者：订阅并使用随机数的用户，也称订阅者或使用者；</p> 
+                                </li> 
+                                <li class="text-center">
+                                   <p class="text-left">Oracle：HRG合约系统，为提交者和消费者提供所有操作接口;</p> 
+                                </li> 
+                            </ul>
+                            <p class="text2em">
+                                提交者分两阶段生成一个随机种子，当消费者订阅随机数时，附带一个口令，Oracle 系统从未完成第二阶段提交的Commit中随机订阅一条给消费者并记录订阅口令。当提交者完成第二阶段提交后，消费者可通过订阅的种子哈希从Oracle查看订阅到的随机数。因为种子的提交对世界是公开的，而与之绑定的订阅口令是私密的，所以随机数是由种子与口令哈希计算产生。
+                            </p>
+                            <p  class="text2em">整个过程如下图：</p>
+                             <p class="text-center">
+                                  <img src="assets/docimg/flow-1.png" width="700" alt="">
+                            </p>
+                            <h5>提交者提交随机种子</h5> 
+                            <p class="text2em">
+                                HRG系统的随机数来源是提交者制造的随机种子，为了保证种子的不可预知性和可验证性，提交者分两个阶段完成一个种子的生成。
+                            </p>
                             <ol class="ml-2"> 
                                 <li class="text-center">
-                                   <p class="text-left"> 提交者准备一个种子，通过合约方法获得种子的哈希.</p>
+                                   <p class="text-left">提交者本地生成一个32字节种子，通过合约方法获得种子的哈希.</p>
                                     <img src="assets/docimg/1.png" width="500" alt="">
                                 </li> 
                                 <li class="text-center mt10">
-                                    <p class="text-left">提交者执行第一次提交，将种子哈希提交到Oracle，Oracle存储为commits.</p>
+                                    <p class="text-left">提交者执行第一阶段提交，将种子哈希提交到Oracle，Oracle查重之后存储为commits，并且从HPB链上获取当前区块的真随机数存储到commits中作为备用。同时 Oracle 系统收取提交者 1 HRG 作为押金。</p>
                                        <img src="assets/docimg/2.png" width="500" alt="">
                                 </li> 
                                 <li class="text-center mt10">
-                                    <p  class="text-left">在之后的一段时间内，提交者执行第二次提交，将种子提交到Oracle，Oracle重新计算种子的哈希与第一次提交的哈希进行比较验证，验证通过后，种子合法可被使用。</p>
+                                    <p  class="text-left">至少间隔1个区块后，最多不超过200个区块，提交者执行第二阶段提交，将种子提交到Oracle，Oracle重新计算种子的哈希与第一阶段提交的哈希进行比较验证，验证通过后，种子提交完成，退还 1HRG质押金，并在HRG Token合约中铸造 1HRG作为奖励发送给提交者.</p>
                                      <img src="assets/docimg/3.png" width="500" alt="">
                                 </li> 
                             </ol> 
-                            <p  class="text2em">HRG的消费者需要随机数时，调用Oracle的requestRandom接口请求随机数。Oracle合约从存储的commits中挑选未经过reveal的commit与消费者进行绑定。当提交者对此条commit执行reveal并通过验证后，Oracle合约会调用消费者合约的responseRandom方法，使用种子生成随机数传送给消费者。</p>
-                            <p  class="text2em">整体流程如下图：</p>
-                            <p class="text-center">
-                                  <img src="assets/docimg/4.png" width="700" alt="">
+                            <p class="text2em">
+                                如果在第一阶段提交后超过200个区块没有执行第二阶段提交，那么Oracle将不再接受提交，罚没押金作为惩罚。当提交者累积的未验证记录达到一定数量后，提交者将无法再执行新的提交，只能切换其他账户。
                             </p>
+
+                            <h5>消费者/订阅者订购和使用随机数</h5> 
+                            <p class="text2em">
+                                消费者通过Oracle系统的requestRandom接口订阅随机数，如果有可用Commit，则自动绑定订阅关系，同时收取 2 HRG作为手续费。
+                            </p>
+                            <p class="text2em">
+                                提交者应当及时对被订阅的Commit执行第二阶段提交，完成第二阶段提交后，消费者可得到由提交者提交的种子产生的随机数；如果提交者超时未完成提交，那么消费者将得到以HPB链上真随机数作为种子产生的随机数。
+                            </p>
+                            <p class="text2em">
+                                requestRandom允许传入两个账户地址，分别为扣费账户和消费账户。扣费账户提供手续费，订阅成功后可以查看订阅列表，扣费账户和消费账户都有权查看最终得到的随机数。消费账户通常使用需要使用随机数的合约地址。
+                            </p>
+                            <p class="text-center">
+                                  <img src="assets/docimg/5.png" width="700" alt="">
+                            </p> 
                         </section> 
                         <section> 
                             <h5>使用说明</h5>
                             <p class="text2em">1. 提交者如何提交随机数</p>
-                            <p class="ml-2">
-                                HRG 的 Oracle 合约提供了gethash, commit 和 reveal 三个接口帮助用户计算种子哈希并完成提交和验证的操作。
+                            <p class="ml-3">
+                                提交者可以在 https://rc.hpb.io 上进行手动提交，具体操作步骤见<a href="操作手册" target="_blank">操作手册</a>, 
+                                也可以在服务器上运行robot 进行自动提交，具体教程见 <a href="https://github.com/hpb-project/srng-robot" target="_blank">robot操作手册</a>.
                             </p>
-                            <ul class="ml-3">
-                                <li>
-                                    <p>提交者首先需要生成一个随机的32字节的种子seed，调用gethash 方法获得hash。</p>
-                                </li>  
-                                <li>
-                                    <p>调用commit 方法提交hash，同时会Oracle合约会收取提交者 100 HRG 作为押金。</p>
-                                </li> 
-                                <li>
-                                    <p>在commit成功后的1~1000个区块内完成二次提交，也就是将第一步调用reveal方法将第一步产生的seed提交。</p>
-                                </li> 
-                                 <li>
-                                    <p>完成第三步之后，Oracle合约会返还第二步缴纳的押金，并获得系统的挖矿奖励。如果在Reveal的时候，此条Commit已经被消费者订阅，在Reveal成功后提交者还会收到消费者的订阅手续费作为收益。</p>
-                                </li>
-                            </ul>
-                            <p class="ml-2">
-                                如果用户使用dApp提交随机数，上述步骤全部由dApp完成，如果开发者使用nodejs自己开发dApp，上述步骤代码如下：
-                            </p>
-                            <pre class="undefined">
-            function genrandom() {
-                const hexString = Array(64)
-                .fill()
-                .map(() => Math.round(Math.random() * 0xF).toString(16)
-                .join('');
-                return '0x'+hexString
-            }
-            async function CommitAndReveal(contractMap) {
-                var tokenAddr     = "0xaB06f2bEd629106236dA27fdc41E90654aD75C09";
-                var depositAddr   = "0xd834452287dcCF0cf40F14CF252E593bC9191a78";
-                var configAddr    = "0x4E3aa47E2a6ac00918Bd819294eCe17235EfA986";
-                var oracleAddr    = "0x800B5105b31bD100bE85E8646f86EA263aDB1786";
-                const token = await hre.ethers.getContractAt("HRGToken", tokenAddr);
-                const config = await hre.ethers.getContractAt("Config", configAddr);
-                const oracle = await hre.ethers.getContractAt("Oracle", oracleAddr);
-                // step1. generate random seed and compute hash.
-                var seed = genrandom();
-                var hash = await oracle.getHash(seed);
-                console.log("hash is", hash,"seed is", seed);
-                // step2. compute seed hash and call commit.
-                // need approve hrg token to deposit contract.
-                var depositAmount = await config.getDepositAmount();
-                var depositwei = web3.utils.toWei(depositAmount.toString(), 'wei').toString();
-                var t = await token.approve(depositAddr, depositwei);
-                await t.wait();
-                // call commit.
-                var tx = await oracle.commit(hash);
-                await tx.wait();
-                console.log("commit succeed");
-                // wait some time.
-                var duration = 100000;
-                sleep(duration);
-                // step3. reveal with seed.
-                tx = await oracle.reveal(hash, seed, {gasLimit:10000000});
-                await tx.wait();
-                console.log("reveal succeed");
-            }
-
-                            </pre>
-                            <p class="ml-2">这里有完整的可运行的提交随机数示例，在执行前，请先确保执行的账户中有足够的HRG Token.</p>
-                            <pre>
+                               <pre>
             # git clone https://github.com/hpb-project/SRNG
             # cd SRNG
             # npm install
             # // 手动修改 runcommiter.sh 中的 PRIVATE_KEY 填入执行账户的私钥. 
             # ./runcommiter.sh
                             </pre>
-                           
-                            <p class="text2em">2. 消费者如何使用随机数</p>
-                            <p class="ml-2">
-                                HRG 的 Oracle 合约提供了 requestRandom 接口用于开发者获取随机数。但是这不是能够立刻获得随机数的接口，而是预订的操作。当随机数的生产者/提交者提交随机数种子时，将会调用开发者当前合约的 responseRandom 接口，将随机数传送过来。
-                            </p> 
-                            <p class="ml-2">
-                               下面是一个使用SRNG随机数的示例。
+
+                            <p class="text2em">
+                                2. 消费者如何使用随机数
                             </p>
-                            <pre>
-            // SPDX-License-Identifier: MIT
-            pragma solidity ^0.8.0;
-            interface IOracle {
-                function requestRandom(address,address) external returns (bool);
-            }
-            contract ComsumerExample {
-                // 用于控制合约私有操作的权限
-                address private _owner;
-                modifier onlyOwner() {
-                    require(_owner == msg.sender, "Ownable: caller is not the owner");
-                    _;
-                }
-                IOracle oracle = IOracle(0x800B5105b31bD100bE85E8646f86EA263aDB1786); // oracle contract address
-                constructor() {
-                    _owner = msg.sender; // 将合约的部署者设置为 owner
-                }
-
-                // 用于存储随机数 (Translation: // used to store random numbers)
-                uint256 _nrandom;      
-                // responseRandom 用于接收随机数, 使用 _nrandom 存储下来. 
-                function responseRandom(bytes32 commit, bytes32 random) public returns (bool) {
-                    _nrandom = uint256(random);
-                    return true;
-                }
-                address [] players;     // 合约业务逻辑，存储参与游戏的用户
-
-                function startNewGame() public onlyOwner {      // 开始比赛，私有操作，只能合约owner调用 
-                    // 请求随机数. 第一个参数为交易发起者，第二个参数为当前合约地址. 
-                    oracle.requestRandom(msg.sender, address(this));
-                }
-                // 合约业务逻辑，任何用户都可以参加游戏 
-                function joinGame() public {
-                    players.push(msg.sender);
-                }
-                // 合约业务逻辑，当获得了随机数后，结束比赛，并使用随机数计算获胜者.
-                function endGame() public onlyOwner {
-                    require(_nrandom != 0, "not got random");
-                    require(players.length > 0, "have no players");
-                    uint32 wineridx = uint32(_nrandom% players.length);
-                    emit GameWinner(players[wineridx], block.number);
-                }
-                event GameWinner(address winner, uint256 block); // 合约业务事件 
-            }
-
-                            </pre>
-                            <p class="ml-2">
-                               合约部署后，调用合约的 startGame 会订阅随机数，但是此方法会被收取一定数量的 HRG Token 作为手续费，因此，需要先进行 token 授权, 示例代码如下:
+                            <p  class="ml-3">
+                                消费者可以在 https://rc.hpb.io/purchase 上体验直接订阅随机数以及使用合约订阅随机数，还可以基于示例合约开发自己的合约来使用随机数。具体操作步骤见HRG订阅随机数操作手册。
                             </p>
-                            <pre>
-            async function doSubscribe(consumerContract) {
-                var deposit     = "0xd834452287dcCF0cf40F14CF252E593bC9191a78"; // deposit contract address on mainnet.
-                var tokenAddr   = "0xaB06f2bEd629106236dA27fdc41E90654aD75C09"; // hrgtoken contract address on mainnet.
-                var configAddr  = "0x4E3aa47E2a6ac00918Bd819294eCe17235EfA986"; // config contract address on mainnet.
-                const token = await hre.ethers.getContractAt("HRGToken", tokenAddr);
-                const config = await hre.ethers.getContractAt("Config", configAddr);
-                var fee = await config.getFee();
-                console.log("approve fee to deposit");
-                var r = await token.approve(deposit, fee);
-                await r.wait();
-                var start = await consumerContract.startNewGame();
-                await start.wait();
-                console.log("start game and subscribe succeed");
-            }
-
-                            </pre>
-                            <p class="ml-2">
-                                这里有完整的可运行的消费合约示例，在执行前，请先确保执行的账户中有足够的HRG Token.
+                            <p class="ml-3">
+                                  这里有完整的可运行的消费合约示例，在执行前，请先确保执行的账户中有足够的 HRG Token.
                             </p>
                             <pre>
             # git clone https://github.com/hpb-project/SRNG
             # cd SRNG
             # npm install
-            # // 手动修改 runconsume.sh 中的 PRIVATE_KEY 填入执行账户的私钥.  
+            # // 手动修改 runconsume.sh 中的 PRIVATE_KEY 填入执行账户的私钥. 
             # ./runconsume.sh
-
-                            </pre>
+                            </pre> 
                         </section>
                             
                         <section>
@@ -477,12 +386,12 @@
                            
                         <section>
                             <h5> 挖矿奖励算法.</h5>
-                            <p class="text2em"> 用户参与提交随机数都可以获得挖矿奖励.</p>
+                            <p class="text2em"> 用户参与提交随机数都可以获得挖矿奖励。</p>
                              <ul class="ml-2">
-                                <li><p>初始阶段，用户完成种子验证之后，给与 100 HRG奖励；</p> </li>
+                                <li><p>初始阶段，用户完成种子验证之后，给与 1 HRG奖励；</p> </li>
                                 <li><p>当奖励数量每达到剩余总量的50%时，奖励开始减半; </p></li> 
                             </ul>
-                             <p class="text2em"> 举例说明：当总奖励数达到 25,000,000 之后，每次奖励 50 HRG； 当奖励总数达到 37,500,000 后，每次奖励 25HRG。</p>
+                             <p class="text2em"> 举例说明：挖矿总数量为 50,000,000 HRG, 当奖励数达到 25,000,000 之后，每次奖励 0.5 HRG； 当奖励总数达到 37,500,000 后，每次奖励 0.25 HRG。</p>
                         </section>
 
                     
@@ -493,8 +402,8 @@
                               <ul class="ml-2">
                                 <li><p>不可提供重复的种子和种子哈希</p></li>
                                 <li><p>第一阶段提交和第二阶段验证之间至少要间隔1个区块</p></li>
-                                <li><p>提交者最多只能有10个未验证的Commit存在，达到之后不能再提交新的Commit</p></li>
-                                <li><p>超过1000个区块之后的Commit无法再进行验证</p></li>
+                                <li><p>第二阶段提交必须在第一阶段提交之后的200个区块内完成，否则将不能执行第二次提交，质押金不予退回</p></li>
+                                <li><p>提交者最多只能有100000个未验证的Commit存在，达到之后不能再提交新的Commit</p></li> 
                             </ul>
                         </section>
                     </div>

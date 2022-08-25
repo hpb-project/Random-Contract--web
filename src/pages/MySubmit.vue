@@ -133,6 +133,7 @@ export default {
       lockTokenCount:0,//未转换位数的质押数量
       isShowGenerate:true,//是否显示自动生成按钮
       revealSeed:'',
+      heighBlock:0, //当前块高度
 
     }
   },
@@ -179,6 +180,9 @@ export default {
           that.accountAddress = web3.currentProvider.selectedAddress
       } 
       that.blockMax = await configAbiContract.methods.getMaxVerifyBlocks().call() || 0;
+
+      that.heighBlock = await that.$web3.eth.getBlockNumber();
+
       //质押数量
       that.lockTokenCount= await configAbiContract.methods.getDepositAmount().call()|| 0;
       that.lockToken = that.$web3.utils.fromWei(that.lockTokenCount||0,'ether');
@@ -256,15 +260,22 @@ export default {
                   var operator = '<button id='+ btnToSubmit +' class="btn btn-info">'+ that.$t("mySubmit.lookButton") +'</button> ';
                  return operator;
                
-              }else{
-                 //提交种子
-                  $(that.mySubmitTableName).on("click", "tbody #" + btnToSubmit,
-                    function () {
-                        that.submitSeeds(full.Hash,full.EndBlock);
-                    }
-                  ); 
-                  var operator = '<button id='+ btnToSubmit +' class="btn btn-info">'+ that.$t("mySubmit.submitButton") +'</button> ';
-                  return operator;
+              }else{ 
+                  if(parseInt(that.heighBlock) > parseInt(full.EndBlock)){
+                    //当前高度超过截止高度，不能提交
+                      var operator = '<button id='+ btnToSubmit +' class="btn btn-info disabled">'+ that.$t("mySubmit.submitButton") +'</button> ';
+                      return operator;  
+                  
+                  }else{
+                    $(that.mySubmitTableName).on("click", "tbody #" + btnToSubmit,
+                      function () {
+                          that.submitSeeds(full.Hash,full.EndBlock);
+                      }
+                    ); 
+                    var operator = '<button id='+ btnToSubmit +' class="btn btn-info">'+ that.$t("mySubmit.submitButton") +'</button> ';
+                    return operator;  
+                  
+                  } 
               }
            
            
@@ -511,6 +522,10 @@ export default {
             that.HRGBalance = that.$web3.utils.fromWei(result,'ether');
          }
       });
+
+    //当前块高度
+    const heighBlock = await that.$web3.eth.getBlockNumber();
+
      utils.toastShowWait(that.$t("common.commonTips.msgTip4"), that.$t("common.commonTips.msgTip12"), "toast-top-center");
      //账户地址 
       oracleAbiContract.methods.getUserCommitsList(that.accountAddress).call(null,function(error,result){
@@ -524,7 +539,7 @@ export default {
                 const obj = {
                   rowNum :index +1,
                   Block:item.block,
-                  EndBlock:parseInt(item.block) +parseInt(that.blockMax),
+                  EndBlock:parseInt(item.block) + parseInt(that.blockMax),
                   Hash:item.commit,
                   State:item.substatus,
                   Revealed:item.revealed,
@@ -533,7 +548,7 @@ export default {
                 that.mySubmitList.push(obj)
 
             })
-            that.initTable(that.mySubmitList); 
+            that.initTable(that.mySubmitList,heighBlock); 
           } 
       });
 

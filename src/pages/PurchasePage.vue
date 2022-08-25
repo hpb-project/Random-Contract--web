@@ -148,6 +148,7 @@ export default {
       purchaseTableName: "#purchaseTable",
       heighBlock:0,
       unSubBlocks:0,//取消块购买高度
+      blockMax:0,//二次提交块号
       btnDisabled:true,
       approveDisabled:false,//批准可用
       userAddress:'',//使用者address
@@ -209,6 +210,8 @@ export default {
       });
       //取消订阅块数间隔
       that.unSubBlocks = await configAbiContract.methods.getUnSubBlocks().call() || 0;
+      //二次提交块数间隔
+      that.blockMax = await configAbiContract.methods.getMaxVerifyBlocks().call() || 0;
 
       //购买质押数量
       that.lockSubscribeCount= await configAbiContract.methods.getFee().call()|| 0;
@@ -257,13 +260,26 @@ export default {
                   if (data == "1"){                       
                       return '<span class="badge outline-badge-success">Revealed</span>';
                   }else{
-                      return '<span class="badge outline-badge-danger">UnRevealed</span>';
+                     if(parseInt(that.heighBlock) >parseInt(full.Block) + parseInt(that.blockMax) ){                        
+                         return '<span class="badge  outline-badge-danger">TimeOut UnRevealed</span>';
+                      }else{
+                        //可以继续认证，没有超过
+                        return '<span class="badge outline-badge-danger">UnRevealed</span>';
+                      }
+                     
+                     
                   } 
                }else{
                     if (data == "1") {
                       return '<span class="badge  outline-badge-success">认证完成</span>';
                     } else {
-                      return '<span class="badge  outline-badge-danger">未认证</span>';
+                      if(parseInt(that.heighBlock) >parseInt(full.Block) + parseInt(that.blockMax) ){                        
+                         return '<span class="badge  outline-badge-danger">超时未验证</span>';
+                      }else{
+                        //可以继续认证，没有超过
+                        return '<span class="badge  outline-badge-danger">未验证</span>';
+                      }
+                     
                     }
                }            
             },
@@ -281,19 +297,37 @@ export default {
                   return operator;
 
               }else{
-                if( that.heighBlock > parseInt(full.Block) + parseInt(that.unSubBlocks)){
-                  return ''
-                }else{
-                  var btnToPurchase = "btnPurchase" + full.rowNum;
-                  $(that.purchaseTableName).undelegate("tbody #" + btnToPurchase, "click");
-                  $(that.purchaseTableName).on("click", "tbody #" + btnToPurchase,
-                    function () {
-                        that.CanclePurchase(full.Hash,full.Block);
+
+                 if(parseInt(that.heighBlock) >parseInt(full.Block) + parseInt(that.blockMax) ){   
+                   //超过截止块号，不能二次提交，显示查看随机数     
+                     var btnToRandom = "btnLookRandom" + full.rowNum;
+                    $(that.purchaseTableName).undelegate("tbody #" + btnToRandom, "click");
+                    $(that.purchaseTableName).on("click", "tbody #" + btnToRandom,
+                      function () {
+                          that.LookRandom(full.Hash);
+                      }
+                    ); 
+                    var operator = '<button id='+ btnToRandom +' class="btn btn-info">'+ that.$t("purchase.randomButton") +'</button> ';
+                    return operator;
+                 }else{
+                    if( parseInt(that.heighBlock) > parseInt(full.EndBlock) + parseInt(that.unSubBlocks)){
+                      //不能取消购买，显示等待验证
+                      var operator = '<button id='+ btnToPurchase +' class="btn btn-info disabled">'+ that.$t("purchase.waitButton") +'</button> ';
+                      return operator;
+                    }else{
+                      var btnToPurchase = "btnPurchase" + full.rowNum;
+                      $(that.purchaseTableName).undelegate("tbody #" + btnToPurchase, "click");
+                      $(that.purchaseTableName).on("click", "tbody #" + btnToPurchase,
+                        function () {
+                            that.CanclePurchase(full.Hash,full.Block);
+                        }
+                      ); 
+                      var operator = '<button id='+ btnToPurchase +' class="btn btn-info">'+ that.$t("purchase.submitButton") +'</button> ';
+                      return operator;
                     }
-                  ); 
-                  var operator = '<button id='+ btnToPurchase +' class="btn btn-info">'+ that.$t("purchase.submitButton") +'</button> ';
-                  return operator;
-                }
+
+                 }
+                
               
               }              
             },
