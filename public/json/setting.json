@@ -1,11 +1,11 @@
 {
     "setting":{
-        "configaddr":"0xea8DE2853087D7425c669Dd1A37CEf8cC35710Ea",
-        "oracleaddr":"0x386A2258AdFa29241863f3B7B55f9116cA7B22f6", 
-        "tokenaddr":"0xF02F2575CfB182064477879165A684b895849f2D", 
-        "storeageaddr":"0x4E01AD10d450A4ccbae1C6b3dEEb8B835534e688",
-        "statsaddr":"0x6A4EdC699726606338eC1b575C1578b5842F4D5a",
-        "commiteraddr":"0x2d0B1e8fb15E604E5be624284Fcd457b7e2d09df",
+        "configaddr":"0xD471aeE47025aa773594B4F0C3b3ebC16B7E7D1F",
+        "oracleaddr":"0x6747596001fc61e338b46F6e7D2e5fe21BdfFB25", 
+        "tokenaddr":"0xB691d5FC540A8327D8D64Bf013309DE47AeF78dB", 
+        "storeageaddr":"0x04268566782e7b68BaEf2CEDf8F0b818B4a2820b",
+        "statsaddr":"0xa264dc57C4f6Fd95d179596e16e51CB50cdE912B",
+        "commiteraddr":"0x118af822913cf7BAA7b5073187d6f89c6D313e73",
         "blockRange":200
     },
     "configabi":  [
