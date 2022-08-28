@@ -77,7 +77,7 @@
                             <p class="text2em">1. How the Submitter submits the random number</p>
                             <p class="ml-3">
                                 Submitters can submit manually on https://rc.hpb.io. 
-                                Find the <a href="操作手册" target="_blank">Operation Manual</a> for the procedure. 
+                                Find the <a href="commitManul" target="_blank">Operation Manual</a> for the procedure. 
                                 Or operate the robot on the server for automatic submission, 
                                 and see specific tutorials in the <a href="https://github.com/hpb-project/srng-robot" target="_blank">Robot Operation Manual</a>. 
                             </p>
@@ -96,7 +96,7 @@
                                 2. How consumers use random numbers
                             </p>
                             <p  class="ml-3">
-                                Consumers can experience subscribing to random numbers directly and using contracts to subscribe to random numbers at https://rc.hpb.io/purchase. Besides, they can also develop their own contracts based on the example contracts to use random numbers. For specific operation steps, please refer to the Operation Manual of HRG Subscribing Random Number.
+                                Consumers can experience subscribing to random numbers directly and using contracts to subscribe to random numbers at https://rc.hpb.io/purchase. Besides, they can also develop their own contracts based on the example contracts to use random numbers. For specific operation steps, please refer to the<a href="https://docs.google.com/document/d/12JcuYK772bdwcCJ-dmn3t-rBTrUOk8L59rbhj96ihqQ" target="_blank">Operation Manual of HRG Subscribing Random Number</a> .
                             </p>
                             <p class="ml-3">
                                   Here is a complete example of a running consumer contract. Before executing, please make sure that there are enough HRG Tokens in the executing account. 
@@ -235,7 +235,7 @@
                                 2. 消费者如何使用随机数
                             </p>
                             <p  class="ml-3">
-                                消费者可以在 https://rc.hpb.io/purchase 上体验直接订阅随机数以及使用合约订阅随机数，还可以基于示例合约开发自己的合约来使用随机数。具体操作步骤见HRG订阅随机数操作手册。
+                                消费者可以在 https://rc.hpb.io/purchase 上体验直接订阅随机数以及使用合约订阅随机数，还可以基于示例合约开发自己的合约来使用随机数。具体操作步骤见<a href="https://shimo.im/docs/N2A1MVzwmEf5vAD1/" target="_blank">HRG订阅随机数操作手册</a>HRG订阅随机数操作手册。
                             </p>
                             <p class="ml-3">
                                   这里有完整的可运行的消费合约示例，在执行前，请先确保执行的账户中有足够的 HRG Token.
