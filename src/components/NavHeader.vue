@@ -201,9 +201,9 @@ export default {
 
   },
   mounted(){  
-    // if(!this.IsConnected && web3.currentProvider.selectedAddress) { 
-    //    this.connectWallet();
-    // }
+    if(!this.IsConnected && web3.currentProvider.selectedAddress) { 
+       this.connectWallet();
+    }
     this.startHeightBlock()
   },
 

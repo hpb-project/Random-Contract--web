@@ -4,52 +4,58 @@
         <nav id="topbar">
             <ul class="navbar-nav theme-brand flex-row  text-center">
                 <li class="nav-item theme-logo">
-                    <a href="/">
+                     <router-link to="/"  >
                         <img src="assets/img/logo.svg" class="navbar-logo" alt="logo">
-                    </a>
+                     </router-link>
+                    <!-- <a href="/">
+                        <img src="assets/img/logo.svg" class="navbar-logo" alt="logo">
+                    </a> -->
                 </li>
                 <li class="nav-item theme-text">
-                    <a href="/" class="nav-link"> HPB Random Contract </a>
+                    <router-link to="/"  >
+                        HPB Random Contract
+                     </router-link>
+                    <!-- <a href="/" class="nav-link"> HPB Random Contract </a> -->
                 </li>
             </ul>
 
             <ul class="list-unstyled menu-categories" id="topAccordion">
 
-                <li class="menu single-menu "  :class="{active: '/' === activePath}" >
-                    <a href="/"   class="dropdown-toggle autodroprown">
+                <li class="menu single-menu ">
+                    <router-link class="dropdown-toggle autodroprown" active-class="active" exact  to="/" >
                         <div class=""> 
                             <span>{{$t("common.topMenu.home") }}</span>
-                        </div>                        
-                    </a>
+                        </div>      
+                    </router-link> 
                 </li>
              
-                  <li class="menu single-menu"  v-show="IsConnected" :class="{active: 'mysubmit' === activePath}" >
-                    <a href="/mysubmit"   class="dropdown-toggle autodroprown">
+                  <li class="menu single-menu"  v-show="IsConnected"   > 
+                     <router-link class="dropdown-toggle autodroprown"  active-class="active" to="/mysubmit" >
                         <div class=""> 
-                            <span>{{$t("common.topMenu.submit") }}</span>
-                        </div> 
-                    </a>
+                             <span>{{$t("common.topMenu.submit") }}</span>
+                        </div>      
+                    </router-link> 
                 </li> 
-                <li class="menu single-menu" v-show="IsConnected" :class="{active: 'purchase' === activePath}" >
-                    <a href="/purchase"   class="dropdown-toggle autodroprown">
+                <li class="menu single-menu" v-show="IsConnected"   > 
+                     <router-link class="dropdown-toggle autodroprown"  active-class="active"  to="/purchase" >
                         <div class=""> 
-                            <span>{{$t("common.topMenu.purchase") }}</span>
-                        </div>                            
-                    </a>
+                             <span>{{$t("common.topMenu.purchase") }}</span>
+                        </div>      
+                    </router-link> 
                 </li> 
-                <li class="menu single-menu" v-show="IsConnected" :class="{active: 'mybalance' === activePath}" >
-                    <a href="/mybalance"   class="dropdown-toggle autodroprown">
+                <li class="menu single-menu" v-show="IsConnected"  > 
+                     <router-link class="dropdown-toggle autodroprown" active-class="active"   to="/mybalance" >
                         <div class=""> 
-                            <span>{{$t("common.topMenu.balance") }}</span>
-                        </div>                            
-                    </a>
+                             <span>{{$t("common.topMenu.balance") }}</span>
+                        </div>      
+                    </router-link> 
                 </li>
-                 <li class="menu single-menu"   :class="{active: 'document' === activePath}">
-                    <a href="/document"   class="dropdown-toggle autodroprown">
+                 <li class="menu single-menu"   > 
+                     <router-link class="dropdown-toggle autodroprown" active-class="active"   to="/document" >
                         <div class=""> 
-                            <span>{{$t("common.topMenu.document") }}</span>
-                        </div>                        
-                    </a>
+                             <span>{{$t("common.topMenu.document") }}</span>
+                        </div>      
+                    </router-link>
                 </li>
             </ul>
         </nav>
@@ -69,18 +75,18 @@ export default {
   },
   mounted(){
     const that = this 
-    const path = that.$route.path;
-    if(path ==='/' || path.includes('/home')){
-        that.activePath = '/';
-    }else if(path.includes('/document')){
-        that.activePath = 'document';
-    } else if(path.includes('/purchase')){
-        that.activePath = 'purchase';
-    } else if(path.includes('/mysubmit')){
-        that.activePath = 'mysubmit';
-    }else if(path.includes('/mybalance')){
-        that.activePath = 'mybalance';
-    }
+    // const path = that.$route.path;
+    // if(path ==='/' || path.includes('/home')){
+    //     that.activePath = '/';
+    // }else if(path.includes('/document')){
+    //     that.activePath = 'document';
+    // } else if(path.includes('/purchase')){
+    //     that.activePath = 'purchase';
+    // } else if(path.includes('/mysubmit')){
+    //     that.activePath = 'mysubmit';
+    // }else if(path.includes('/mybalance')){
+    //     that.activePath = 'mybalance';
+    // }
      
     if(!that.IsConnected && web3.currentProvider.selectedAddress) {     
         that.accountAddress = web3.currentProvider.selectedAddress    
@@ -100,10 +106,6 @@ export default {
     AccountAddress() {
       return this.$store.state.web3.accountAddress;
     },
-  }, 
- 
-  methods: {
-    
- }
+  } 
 };
 </script>

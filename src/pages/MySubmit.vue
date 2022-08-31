@@ -175,14 +175,15 @@ export default {
   },
 
   async mounted() { 
-      var that = this;
+      var that = this; 
       if(!that.IsConnected && web3.currentProvider.selectedAddress) {     
           that.accountAddress = web3.currentProvider.selectedAddress
-      } 
+      } else{
+        that.accountAddress = that.$store.state.web3.accountAddress;
+      }
       that.blockMax = await configAbiContract.methods.getMaxVerifyBlocks().call() || 0;
 
-      that.heighBlock = await that.$web3.eth.getBlockNumber();
-
+      that.heighBlock = await that.$web3.eth.getBlockNumber(); 
       //质押数量
       that.lockTokenCount= await configAbiContract.methods.getDepositAmount().call()|| 0;
       that.lockToken = that.$web3.utils.fromWei(that.lockTokenCount||0,'ether');
