@@ -1,13 +1,13 @@
 <template>
   <div id="container">
     <!-- BEGIN LOADER -->
-    <div id="load_screen">
+    <!-- <div id="load_screen">
       <div class="loader">
         <div class="loader-content">
           <div class="spinner-grow align-self-center"></div>
         </div>
       </div>
-    </div> 
+    </div>  -->
     <!--  END LOADER --> 
     <!--  BEGIN MAIN CONTAINER  -->
     <NavHeader></NavHeader>
@@ -79,7 +79,7 @@ export default {
             setTimeout(() => {
               var load_screen = document.getElementById("load_screen");
               document.getElementById("container").removeChild(load_screen);
-            }, 1000);
+            }, 2000);
         
         });
         $(document).ready(function() {
