@@ -526,11 +526,10 @@ export default {
 
     //当前块高度
     const heighBlock = await that.$web3.eth.getBlockNumber();
-
-     utils.toastShowWait(that.$t("common.commonTips.msgTip4"), that.$t("common.commonTips.msgTip12"), "toast-top-center");
+    //  utils.toastShowWait(that.$t("common.commonTips.msgTip4"), that.$t("common.commonTips.msgTip12"), "toast-top-center");
      //账户地址 
       oracleAbiContract.methods.getUserCommitsList(that.accountAddress).call(null,function(error,result){
-         utils.toastClear();
+        //  utils.toastClear();
           if(error !=null){
             utils.toastMsgError(that.$t("common.commonTips.msgTip5"), that.$t("common.commonTips.msgTip7")+ error.message, "toast-top-center");
           }else{
