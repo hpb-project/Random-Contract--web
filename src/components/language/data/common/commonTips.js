@@ -38,7 +38,7 @@ const commonTips = {
         msgTip12:'Loading data,waiting....', 
         msgTip13: "Get Data Failed!",
         msgTip14: "Exceeded The Deadline!",
-        msgTip15: "This operation requires pledge ${block} HRG token, you can return the deposit and get rewards after completing seed verification within ${block} blocks. If you exceed ${block} blocks, you will not be able to verify and the deposit will not be returned.",
+        msgTip15: "This operation requires pledge ${lockToken} HRG token, you can return the deposit and get rewards after completing seed verification within ${block} blocks. If you exceed ${block} blocks, you will not be able to verify and the deposit will not be returned.",
         msgTip16:'Your HRG is 0, please recharge first！',
         msgTip17:'HRG Token not enough, please recharge first!',
         msgTip18:'Can not cancel the purchase after ${block} blocks.',
